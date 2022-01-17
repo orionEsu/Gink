@@ -135,13 +135,16 @@ const curFormat = function (value, locale, currency) {
 const displayMovements = function (acc) {
   containerMovements.innerHTML = ' ';
 
-  acc.movements.forEach(el => {
+  acc.movements.forEach((el, i) => {
+    const transactionType = el > 0 ? 'deposit' : 'withdrawal';
     const formatted = curFormat(el, acc.locale, acc.currency);
     const html = `
       <div class="movements__row">
-        <div class="movements__type movements__type--deposit">2 deposit</div>
+        <div class="movements__type movements__type--${transactionType}">
+        ${i + 1} ${transactionType}
+      </div>
         <div class="movements__date">3 days ago</div>
-        <div class="movements__value">${formatted}€</div>
+        <div class="movements__value">${formatted}</div>
       </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -176,6 +179,26 @@ const calcSummary = function (acc) {
   labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
 };
 
+const timerCountDown = function () {
+  let time = 20;
+
+  const timerCount = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const second = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${second}`;
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
+
+  timerCount();
+  const timer = setInterval(timerCount, 1000);
+};
+
 let currentAccount;
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
@@ -203,4 +226,5 @@ btnLogin.addEventListener('click', e => {
   displayMovements(currentAccount);
   calcBalance(currentAccount);
   calcSummary(currentAccount);
+  timerCountDown();
 });
