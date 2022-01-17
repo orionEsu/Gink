@@ -59,7 +59,7 @@ const account3 = {
     '2022-02-17T10:51:36.790Z',
   ],
   currency: 'EUR',
-  locale: 'es-ES', 
+  locale: 'es-ES',
 };
 
 const account4 = {
@@ -78,11 +78,11 @@ const account4 = {
     '2022-01-01T10:51:36.790Z',
   ],
   currency: 'MXN',
-  locale: 'es-MX', 
+  locale: 'es-MX',
 };
 
 const accounts = [account1, account2, account3, account4];
-
+console.log(accounts);
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -112,3 +112,95 @@ const inputClosePin = document.querySelector('.form__input--pin');
 ///////////////////////////////////////
 
 // Event Handlers
+const createUsername = accs => {
+  accs.forEach(el => {
+    el.userName = el.owner
+      .toLowerCase()
+      .split(' ')
+      .map(el => el[0])
+      .join('');
+  });
+};
+createUsername(accounts);
+
+// Currency Formatter
+const curFormat = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+};
+
+// Display Movements
+const displayMovements = function (acc) {
+  containerMovements.innerHTML = ' ';
+
+  acc.movements.forEach(el => {
+    const formatted = curFormat(el, acc.locale, acc.currency);
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--deposit">2 deposit</div>
+        <div class="movements__date">3 days ago</div>
+        <div class="movements__value">${formatted}€</div>
+      </div>`;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+// Calculate Balance
+const calcBalance = function (acc) {
+  const balance = acc.movements.reduce((acc, el) => acc + el, 0);
+  labelBalance.textContent = curFormat(balance, acc.locale, acc.currency);
+};
+
+// Calculate Summary
+const calcSummary = function (acc) {
+  const incomes = acc.movements
+    .filter(el => el > 0)
+    .reduce((acc, el) => acc + el);
+  labelSumIn.textContent = curFormat(incomes, acc.locale, acc.currency);
+  const outcomes = acc.movements
+    .filter(el => el < 0)
+    .reduce((acc, el) => acc + el);
+  labelSumOut.textContent = curFormat(
+    Math.abs(outcomes),
+    acc.locale,
+    acc.currency
+  );
+  const interest = acc.movements
+    .filter(el => el > 0)
+    .map(el => el * (acc.interestRate / 100))
+    .filter(el => el > 1)
+    .reduce((acc, el) => acc + el);
+  labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
+};
+
+let currentAccount;
+btnLogin.addEventListener('click', e => {
+  e.preventDefault();
+  const loginFilter = inputLoginUsername.value.toLowerCase();
+
+  currentAccount = accounts.find(el => el.userName === loginFilter);
+
+  if (currentAccount?.pin === +inputLoginPin.value) {
+    labelWelcome.textContent = `Welcome ${currentAccount.owner.split(' ')[0]}`;
+  }
+  const date = new Date();
+  labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, {
+    hourCycle: 'h24',
+    hour: '2-digit',
+    minute: '2-digit',
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+  }).format(date);
+
+  containerApp.style.opacity = 1;
+  inputLoginPin.value = inputLoginUsername.value = '';
+  inputLoginPin.blur();
+
+  displayMovements(currentAccount);
+  calcBalance(currentAccount);
+  calcSummary(currentAccount);
+});
