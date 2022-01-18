@@ -241,7 +241,7 @@ btnTransfer.addEventListener('click', e => {
   );
   const amount = +inputTransferAmount.value;
 
-  if (timer) clearInterval();
+  if (timer) clearInterval(timer);
   timer = timerCount();
 
   if (
@@ -257,4 +257,19 @@ btnTransfer.addEventListener('click', e => {
     calcBalance(currentAccount);
     calcSummary(currentAccount);
   }
+});
+
+// loan Functionality
+btnLoan.addEventListener('click', e => {
+  e.preventDefault();
+  const loanAmount = +inputLoanAmount.value;
+
+  if (currentAccount.movements.some(el => el > el * (10 / 100))) {
+    currentAccount.movements.push(loanAmount);
+    displayMovements(currentAccount);
+    calcBalance(currentAccount);
+    calcSummary(currentAccount);
+  }
+  if (timer) clearInterval(timer);
+  timer = timerCount();
 });
