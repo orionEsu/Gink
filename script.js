@@ -111,7 +111,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 ///////////////////////////////////////
 
-// Event Handlers
+// Functions
 const createUsername = accs => {
   accs.forEach(el => {
     el.userName = el.owner
@@ -200,6 +200,9 @@ const timerCount = function () {
   return timer;
 };
 
+///////////////////////////////////////////
+// Event Handlers
+
 let currentAccount, timer;
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
@@ -270,6 +273,23 @@ btnLoan.addEventListener('click', e => {
     calcBalance(currentAccount);
     calcSummary(currentAccount);
   }
+  inputLoanAmount.value = '';
   if (timer) clearInterval(timer);
   timer = timerCount();
+});
+
+// Delete Account
+btnClose.addEventListener('click', e => {
+  e.preventDefault();
+  if (
+    currentAccount.userName === inputCloseUsername.value &&
+    currentAccount.pin === +inputClosePin.value
+  ) {
+    accounts.splice(
+      accounts.findIndex(el => el.userName === inputCloseUsername.value),
+      1
+    );
+    labelWelcome.textContent = 'Log in to get started';
+    containerApp.style.opacity = 0;
+  }
 });
