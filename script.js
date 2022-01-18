@@ -153,8 +153,8 @@ const displayMovements = function (acc) {
 
 // Calculate Balance
 const calcBalance = function (acc) {
-  const balance = acc.movements.reduce((acc, el) => acc + el, 0);
-  labelBalance.textContent = curFormat(balance, acc.locale, acc.currency);
+  acc.balance = acc.movements.reduce((acc, el) => acc + el, 0);
+  labelBalance.textContent = curFormat(acc.balance, acc.locale, acc.currency);
 };
 
 // Calculate Summary
@@ -179,10 +179,10 @@ const calcSummary = function (acc) {
   labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
 };
 
-const timerCountDown = function () {
-  let time = 20;
+const timerCount = function () {
+  let time = 300;
 
-  const timerCount = function () {
+  const timerCountDown = function () {
     const min = String(Math.trunc(time / 60)).padStart(2, 0);
     const second = String(time % 60).padStart(2, 0);
 
@@ -195,11 +195,12 @@ const timerCountDown = function () {
     time--;
   };
 
-  timerCount();
-  const timer = setInterval(timerCount, 1000);
+  timerCountDown();
+  const timer = setInterval(timerCountDown, 1000);
+  return timer;
 };
 
-let currentAccount;
+let currentAccount, timer;
 btnLogin.addEventListener('click', e => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
@@ -223,8 +224,37 @@ btnLogin.addEventListener('click', e => {
   inputLoginPin.value = inputLoginUsername.value = '';
   inputLoginPin.blur();
 
+  if (timer) clearInterval(timer);
+  timer = timerCount();
+
   displayMovements(currentAccount);
   calcBalance(currentAccount);
   calcSummary(currentAccount);
-  timerCountDown();
+});
+
+// Transfer Functionalities
+btnTransfer.addEventListener('click', e => {
+  e.preventDefault();
+
+  const recieverAccount = accounts.find(
+    el => el.userName === inputTransferTo.value
+  );
+  const amount = +inputTransferAmount.value;
+
+  if (timer) clearInterval();
+  timer = timerCount();
+
+  if (
+    recieverAccount &&
+    amount &&
+    amount > 0 &&
+    recieverAccount !== currentAccount &&
+    currentAccount.balance > amount
+  ) {
+    currentAccount.movements.push(-amount);
+    recieverAccount.movements.push(amount);
+    displayMovements(currentAccount);
+    calcBalance(currentAccount);
+    calcSummary(currentAccount);
+  }
 });
