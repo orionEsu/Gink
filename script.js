@@ -17,8 +17,8 @@ const account1 = {
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
     '2020-07-26T17:01:17.194Z',
-    '2022-01-05T23:36:17.929Z',
-    '2022-01-10T10:51:36.790Z',
+    '2022-01-15T23:36:17.929Z',
+    '2022-01-18T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -49,8 +49,8 @@ const account3 = {
   interestRate: 0.7,
   pin: 3333,
   movementsDates: [
-    '2019-8-12T21:31:17.178Z',
-    '2019-10-2T07:42:02.383Z',
+    '2019-08-12T21:31:17.178Z',
+    '2019-10-02T07:42:02.383Z',
     '2020-01-28T09:15:04.904Z',
     '2020-07-21T10:17:24.185Z',
     '2020-05-15T14:11:59.604Z',
@@ -131,19 +131,38 @@ const curFormat = function (value, locale, currency) {
   }).format(value);
 };
 
+// Date Formatter
+const dateFormat = function (date, locale) {
+  const currentDate = new Date();
+  const daysPassed = Math.round(
+    Math.abs(currentDate - date) / (1000 * 60 * 60 * 24)
+  );
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  return new Intl.DateTimeFormat(locale).format(date);
+};
+
 // Display Movements
-const displayMovements = function (acc) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = ' ';
 
-  acc.movements.forEach((el, i) => {
+  const sortMovs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
+  sortMovs.forEach((el, i) => {
     const transactionType = el > 0 ? 'deposit' : 'withdrawal';
     const formatted = curFormat(el, acc.locale, acc.currency);
+    const date = new Date(acc.movementsDates[i]);
+    const displayDate = dateFormat(date, acc.locale);
+
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${transactionType}">
         ${i + 1} ${transactionType}
       </div>
-        <div class="movements__date">3 days ago</div>
+        <div class="movements__date">${displayDate}</div>
         <div class="movements__value">${formatted}</div>
       </div>`;
 
@@ -243,10 +262,7 @@ btnTransfer.addEventListener('click', e => {
     el => el.userName === inputTransferTo.value
   );
   const amount = +inputTransferAmount.value;
-
-  if (timer) clearInterval(timer);
-  timer = timerCount();
-
+  const date = new Date();
   if (
     recieverAccount &&
     amount &&
@@ -255,20 +271,27 @@ btnTransfer.addEventListener('click', e => {
     currentAccount.balance > amount
   ) {
     currentAccount.movements.push(-amount);
+    currentAccount.movementsDates.push(date);
     recieverAccount.movements.push(amount);
+    recieverAccount.movementsDates.push(date);
     displayMovements(currentAccount);
     calcBalance(currentAccount);
     calcSummary(currentAccount);
   }
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  if (timer) clearInterval(timer);
+  timer = timerCount();
 });
 
 // loan Functionality
 btnLoan.addEventListener('click', e => {
   e.preventDefault();
   const loanAmount = +inputLoanAmount.value;
-
+  const date = new Date().toISOString();
   if (currentAccount.movements.some(el => el > el * (10 / 100))) {
     currentAccount.movements.push(loanAmount);
+    currentAccount.movementsDates.push(date);
     displayMovements(currentAccount);
     calcBalance(currentAccount);
     calcSummary(currentAccount);
@@ -289,7 +312,17 @@ btnClose.addEventListener('click', e => {
       accounts.findIndex(el => el.userName === inputCloseUsername.value),
       1
     );
+    if (timer) clearInterval(timer);
     labelWelcome.textContent = 'Log in to get started';
     containerApp.style.opacity = 0;
   }
+  inputClosePin.value = inputCloseUsername.value = '';
+});
+
+// Sort Account
+let sorted = false;
+btnSort.addEventListener('click', e => {
+  e.preventDefault();
+  displayMovements(currentAccount, !sorted);
+  sorted = !sorted;
 });
