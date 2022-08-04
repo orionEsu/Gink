@@ -82,9 +82,10 @@ const account4 = {
 };
 
 const accounts = [account1, account2, account3, account4];
-console.log(accounts);
+
 // Elements
 const labelWelcome = document.querySelector('.welcome');
+const labelName = document.querySelector('.first__name');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value--in');
@@ -93,7 +94,7 @@ const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
 
 const containerApp = document.querySelector('.app');
-const containerMovements = document.querySelector('.movements');
+const containerMovements = document.querySelector('.movements__mov');
 
 const btnLogin = document.querySelector('.login__btn');
 const btnTransfer = document.querySelector('.form__btn--transfer');
@@ -198,26 +199,26 @@ const calcSummary = function (acc) {
   labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
 };
 
-const timerCount = function () {
-  let time = 300;
+// const timerCount = function () {
+//   let time = 300;
 
-  const timerCountDown = function () {
-    const min = String(Math.trunc(time / 60)).padStart(2, 0);
-    const second = String(time % 60).padStart(2, 0);
+//   const timerCountDown = function () {
+//     const min = String(Math.trunc(time / 60)).padStart(2, 0);
+//     const second = String(time % 60).padStart(2, 0);
 
-    labelTimer.textContent = `${min}:${second}`;
-    if (time === 0) {
-      clearInterval(timer);
-      labelWelcome.textContent = 'Log in to get started';
-      containerApp.style.opacity = 0;
-    }
-    time--;
-  };
+//     labelTimer.textContent = `${min}:${second}`;
+//     if (time === 0) {
+//       clearInterval(timer);
+//       labelWelcome.textContent = 'Log in to get started';
+//       containerApp.style.opacity = 0;
+//     }
+//     time--;
+//   };
 
-  timerCountDown();
-  const timer = setInterval(timerCountDown, 1000);
-  return timer;
-};
+//   timerCountDown();
+//   const timer = setInterval(timerCountDown, 1000);
+//   return timer;
+// };
 
 ///////////////////////////////////////////
 // Event Handlers
@@ -229,8 +230,11 @@ btnLogin.addEventListener('click', e => {
 
   currentAccount = accounts.find(el => el.userName === loginFilter);
 
+  console.log(currentAccount);
+
   if (currentAccount?.pin === +inputLoginPin.value) {
-    labelWelcome.textContent = `Welcome ${currentAccount.owner.split(' ')[0]}`;
+    labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
+    labelName.textContent = `${currentAccount.owner}`;
   }
   const date = new Date();
   labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, {
@@ -243,11 +247,13 @@ btnLogin.addEventListener('click', e => {
   }).format(date);
 
   containerApp.style.opacity = 1;
+  containerApp.style.visibility = 'visible';
+  containerApp.style.display = 'grid';
   inputLoginPin.value = inputLoginUsername.value = '';
   inputLoginPin.blur();
 
-  if (timer) clearInterval(timer);
-  timer = timerCount();
+  // if (timer) clearInterval(timer);
+  // timer = timerCount();
 
   displayMovements(currentAccount);
   calcBalance(currentAccount);
@@ -255,74 +261,74 @@ btnLogin.addEventListener('click', e => {
 });
 
 // Transfer Functionalities
-btnTransfer.addEventListener('click', e => {
-  e.preventDefault();
+// btnTransfer.addEventListener('click', e => {
+//   e.preventDefault();
 
-  const recieverAccount = accounts.find(
-    el => el.userName === inputTransferTo.value
-  );
-  const amount = +inputTransferAmount.value;
-  const date = new Date();
-  if (
-    recieverAccount &&
-    amount &&
-    amount > 0 &&
-    recieverAccount !== currentAccount &&
-    currentAccount.balance > amount
-  ) {
-    currentAccount.movements.push(-amount);
-    currentAccount.movementsDates.push(date);
-    recieverAccount.movements.push(amount);
-    recieverAccount.movementsDates.push(date);
-    displayMovements(currentAccount);
-    calcBalance(currentAccount);
-    calcSummary(currentAccount);
-  }
-  inputTransferAmount.value = inputTransferTo.value = '';
+//   const recieverAccount = accounts.find(
+//     el => el.userName === inputTransferTo.value
+//   );
+//   const amount = +inputTransferAmount.value;
+//   const date = new Date();
+//   if (
+//     recieverAccount &&
+//     amount &&
+//     amount > 0 &&
+//     recieverAccount !== currentAccount &&
+//     currentAccount.balance > amount
+//   ) {
+//     currentAccount.movements.push(-amount);
+//     currentAccount.movementsDates.push(date);
+//     recieverAccount.movements.push(amount);
+//     recieverAccount.movementsDates.push(date);
+//     displayMovements(currentAccount);
+//     calcBalance(currentAccount);
+//     calcSummary(currentAccount);
+//   }
+//   inputTransferAmount.value = inputTransferTo.value = '';
 
-  if (timer) clearInterval(timer);
-  timer = timerCount();
-});
+//   if (timer) clearInterval(timer);
+//   timer = timerCount();
+// });
 
-// loan Functionality
-btnLoan.addEventListener('click', e => {
-  e.preventDefault();
-  const loanAmount = +inputLoanAmount.value;
-  const date = new Date().toISOString();
-  if (currentAccount.movements.some(el => el > el * (10 / 100))) {
-    currentAccount.movements.push(loanAmount);
-    currentAccount.movementsDates.push(date);
-    displayMovements(currentAccount);
-    calcBalance(currentAccount);
-    calcSummary(currentAccount);
-  }
-  inputLoanAmount.value = '';
-  if (timer) clearInterval(timer);
-  timer = timerCount();
-});
+// // loan Functionality
+// btnLoan.addEventListener('click', e => {
+//   e.preventDefault();
+//   const loanAmount = +inputLoanAmount.value;
+//   const date = new Date().toISOString();
+//   if (currentAccount.movements.some(el => el > el * (10 / 100))) {
+//     currentAccount.movements.push(loanAmount);
+//     currentAccount.movementsDates.push(date);
+//     displayMovements(currentAccount);
+//     calcBalance(currentAccount);
+//     calcSummary(currentAccount);
+//   }
+//   inputLoanAmount.value = '';
+//   if (timer) clearInterval(timer);
+//   timer = timerCount();
+// });
 
-// Delete Account
-btnClose.addEventListener('click', e => {
-  e.preventDefault();
-  if (
-    currentAccount.userName === inputCloseUsername.value &&
-    currentAccount.pin === +inputClosePin.value
-  ) {
-    accounts.splice(
-      accounts.findIndex(el => el.userName === inputCloseUsername.value),
-      1
-    );
-    if (timer) clearInterval(timer);
-    labelWelcome.textContent = 'Log in to get started';
-    containerApp.style.opacity = 0;
-  }
-  inputClosePin.value = inputCloseUsername.value = '';
-});
+// // Delete Account
+// btnClose.addEventListener('click', e => {
+//   e.preventDefault();
+//   if (
+//     currentAccount.userName === inputCloseUsername.value &&
+//     currentAccount.pin === +inputClosePin.value
+//   ) {
+//     accounts.splice(
+//       accounts.findIndex(el => el.userName === inputCloseUsername.value),
+//       1
+//     );
+//     if (timer) clearInterval(timer);
+//     labelWelcome.textContent = 'Log in to get started';
+//     containerApp.style.opacity = 0;
+//   }
+//   inputClosePin.value = inputCloseUsername.value = '';
+// });
 
-// Sort Account
-let sorted = false;
-btnSort.addEventListener('click', e => {
-  e.preventDefault();
-  displayMovements(currentAccount, !sorted);
-  sorted = !sorted;
-});
+// // Sort Account
+// let sorted = false;
+// btnSort.addEventListener('click', e => {
+//   e.preventDefault();
+//   displayMovements(currentAccount, !sorted);
+//   sorted = !sorted;
+// });

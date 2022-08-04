@@ -16,7 +16,9 @@ html {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  /* font-family: 'Poppins', sans-serif; */
+  font-family: 'Righteous', cursive;
+
   color: #444;
   background-color: #f3f3f3;
   height: 100vh;
@@ -31,8 +33,8 @@ nav {
 }
 
 .welcome {
-  font-size: 1.9rem;
-  font-weight: 500;
+  font-size: 4rem;
+  font-family: 'Cabin Sketch', cursive;
 }
 
 .logo {
@@ -86,23 +88,28 @@ nav {
 /* MAIN */
 .app {
   position: relative;
-  max-width: 100rem;
-  margin: 4rem auto;
+  max-width: 125rem;
+  margin: auto auto;
   display: grid;
   grid-template-columns: 4fr 3fr;
-  grid-template-rows: auto repeat(3, 15rem) auto;
-  gap: 2rem;
+  margin-top: 4rem;
+  /* grid-template-rows: auto repeat(3, 15rem) auto; */
+  gap: 10rem;
 
   /* NOTE This creates the fade in/out anumation */
   opacity: 0;
+  visibility: collapse;
+  display: none;
   transition: all 1s;
 }
-
+.logo {
+  margin: auto;
+}
 .balance {
-  grid-column: 1 / span 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  /* grid-column: 1 / span 2; */
+  /* display: flex; */
+  /* align-items: flex-end; */
+  /* justify-content: space-between; */
   margin-bottom: 2rem;
 }
 
@@ -118,8 +125,9 @@ nav {
 }
 
 .balance__value {
+  margin: .7rem 0;
   font-size: 4.5rem;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 /* MOVEMENTS */
@@ -128,11 +136,13 @@ nav {
   background-color: #fff;
   border-radius: 1rem;
   overflow: scroll;
+  padding: 0 4rem;
 }
 
 .movements__row {
-  padding: 2.25rem 4rem;
+  padding: 2.25rem 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
 }
@@ -143,7 +153,7 @@ nav {
   font-weight: 500;
   color: #fff;
   padding: 0.1rem 1rem;
-  border-radius: 10rem;
+  border-radius: 5px;
   margin-right: 2rem;
 }
 
@@ -164,7 +174,8 @@ nav {
 
 .movements__value {
   font-size: 1.7rem;
-  margin-left: auto;
+  font-family: 'Righteous', cursive;
+  /* margin-left: auto; */
 }
 
 /* SUMMARY */
@@ -186,6 +197,7 @@ nav {
 .summary__value {
   font-size: 2.2rem;
   margin-right: 2.5rem;
+  margin-top: .5rem;
 }
 
 .summary__value--in,
@@ -211,18 +223,19 @@ nav {
   border-radius: 1rem;
   padding: 3rem 4rem;
   color: #333;
+  border: 1px solid #000;
 }
 
 .operation--transfer {
-  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+  /* background-image: linear-gradient(to top left, #ffb003, #ffcb03); */
 }
 
 .operation--loan {
-  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  /* background-image: linear-gradient(to top left, #39b385, #9be15d); */
 }
 
 .operation--close {
-  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+  /* background-image: linear-gradient(to top left, #e52a5a, #ff585f); */
 }
 
 h2 {
@@ -294,4 +307,82 @@ h2 {
 
 .timer {
   font-weight: 600;
+}
+
+.container {
+  /* background-color: #000; */
+}
+
+.movements__header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
+
+.movements__top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.account__det {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
+  padding: 4rem 0rem;
+  padding-bottom: 2rem;
+}
+
+.account__det--card {
+  font-size: 1.6rem;
+  color: #888;
+}
+
+.account__det--card-no {
+  display: flex;
+  gap: 4rem;
+}
+.account__info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-bottom: 4rem;
+}
+.movements__header {
+  font-size: 1.4rem;
+}
+
+.movements__top__header {
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.transactions {
+  background-color: #fff;
+  padding: 3rem 5rem;
+  border-radius: 20px;
+}
+.credit-card{
+  width: 25px;
+}
+
+.account__det--card-name{
+  display: flex;
+  justify-content: space-between;
+}
+
+.account__det--card-no{
+  font-family: 'Righteous', cursive;
+  font-weight: 700;
+}
+
+.account__det--card{
+  font-family: 'Righteous', cursive;
+}
+
+.account__det--card-exp{
+  margin: 1.5rem 0;
+}
+
+.exp{
+  margin-top: 1rem;
 }
