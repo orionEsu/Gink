@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="shortcut icon" type="image/png" href="/icon.png" />
 
+    <script
+      src="https://kit.fontawesome.com/39bda44580.js"
+      crossorigin="anonymous"
+    ></script>
+
     <link
       href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap"
       rel="stylesheet"
@@ -24,27 +29,36 @@
     />
 
     <link rel="stylesheet" href="style.css" />
-    <title>Bankist</title>
+    <title>Gink</title>
   </head>
   <body class="container">
     <nav>
       <!-- <p class="welcome">Log in to get started</p> -->
       <img src="logo.png" alt="Logo" class="logo" />
-      <form class="login">
-      <input
+
+      <div class="user__container">
+        <img src="img/img-1.jpg" alt="Image of a person" class="user-img">
+
+        <div class="user__container--options">
+            <button class="log-out">Log out</button>
+            <button class="close-account">Close account</button>
+        </div>
+      </div>
+      <!-- <form class="login">
+        <input
           type="text"
           placeholder="user"
           class="login__input login__input--user"
         />
-      <!-- In practice, use type="password" -->
-      <input
+
+        <input
           type="password"
           placeholder="PIN"
           maxlength="4"
           class="login__input login__input--pin"
         />
         <button class="login__btn">&rarr;</button>
-      </form>
+      </form> -->
     </nav>
     <main class="app">
       <section class="account">
@@ -62,7 +76,11 @@
             <div class="account__det--card">
               <div class="account__det--card-name">
                 <p>Card</p>
-                <img src="credit-card-solid.svg" alt="image of a credit card" class="credit-card" />
+                <img
+                  src="credit-card-solid.svg"
+                  alt="image of a credit card"
+                  class="credit-card"
+                />
               </div>
               <div class="account__det--card-exp">
                 <p>Name: <span class="first__name"></span></p>
@@ -124,6 +142,29 @@
       </section>
 
       <section class="transactions">
+        <div class="transaction__header">
+          <p class="transaction__heading">Transfer funds to</p>
+
+          <div class="transaction__beneficiaries">
+            <button class="beneficiary beneficiary-1">
+              <img src="img/img-1.jpg" class="beneficiary__img" alt="" />
+              <p>Gabriel E.</p>
+            </button>
+            <button class="beneficiary beneficiary-2">
+              <img src="img/img-2.jpg" class="beneficiary__img" alt="" />
+              <p>Gabriel E.</p>
+            </button>
+            <button class="beneficiary beneficiary-3">
+              <img src="img/img-3.jpg" class="beneficiary__img" alt="" />
+              <p>Gabriel E.</p>
+            </button>
+            <button class="beneficiary beneficiary-4">
+              <img src="img/img-4.jpg" class="beneficiary__img" alt="" />
+              <p>Gabriel E.</p>
+            </button>
+          </div>
+        </div>
+
         <!-- OPERATION: TRANSFERS -->
         <!-- <div class="operation operation--transfer">
           <h2>Transfer money</h2>
@@ -137,14 +178,19 @@
         </div> -->
 
         <!-- OPERATION: LOAN -->
-        <!-- <div class="operation operation--loan">
-          <h2>Request loan</h2>
+        <div class="operation operation--loan">
+          <div class="operation--loan-header">
+            <i class="fa-solid fa-money-check-dollar"></i>
+            <h2>Request loan</h2>
+          </div>
           <form class="form form--loan">
-            <input type="number" class="form__input form__input--loan-amount" />
-            <button class="form__btn form__btn--loan">&rarr;</button>
-            <label class="form__label form__label--loan">Amount</label>
+            <input type="number" class="form__input form__input--loan-amount" placeholder="Amount"/>
+            <button class="form__btn form__btn--loan">
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </button>
+            <!-- <label class="form__label form__label--loan">Amount</label> -->
           </form>
-        </div> -->
+        </div>
 
         <!-- OPERATION: CLOSE -->
         <!-- <div class="operation operation--close">

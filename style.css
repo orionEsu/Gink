@@ -25,6 +25,10 @@ body {
   padding: 2rem;
 }
 
+img{
+  width: 100%;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -39,6 +43,7 @@ nav {
 
 .logo {
   height: 5.25rem;
+  width: auto;
 }
 
 .login {
@@ -97,10 +102,10 @@ nav {
   gap: 10rem;
 
   /* NOTE This creates the fade in/out anumation */
-  opacity: 0;
+  /* opacity: 0;
   visibility: collapse;
   display: none;
-  transition: all 1s;
+  transition: all 1s; */
 }
 .logo {
   margin: auto;
@@ -220,18 +225,24 @@ nav {
 
 /* OPERATIONS */
 .operation {
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   padding: 3rem 4rem;
   color: #333;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
 }
-
+.operation h2{
+  font-size: 2rem;
+  /* font-weight: 500; */
+  /* margin-bottom: 1rem; */
+}
 .operation--transfer {
   /* background-image: linear-gradient(to top left, #ffb003, #ffcb03); */
 }
 
 .operation--loan {
   /* background-image: linear-gradient(to top left, #39b385, #9be15d); */
+  background-color: #f3f3f3;
+  margin-top: 5rem;
 }
 
 .operation--close {
@@ -239,7 +250,7 @@ nav {
 }
 
 h2 {
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   font-size: 1.7rem;
   font-weight: 600;
   color: #333;
@@ -247,14 +258,17 @@ h2 {
 
 .form {
   display: grid;
-  grid-template-columns: 2.5fr 2.5fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 0.4rem 1rem;
+  /* grid-template-columns: 2.5fr 2.5fr 1fr; */
+  /* grid-template-rows: auto auto; */
+  /* gap: 0.4rem 1rem; */
+  grid-template-columns: 1.5fr .5fr;
+  gap: 1rem;
 }
 
 /* Exceptions for interst */
 .form.form--loan {
-  grid-template-columns: 2.5fr 1fr 2.5fr;
+  margin-top: 2rem;
+  /* grid-template-columns: 2.5fr 1fr 2.5fr; */
 }
 .form__label--loan {
   grid-row: 2;
@@ -264,19 +278,26 @@ h2 {
 .form__input {
   width: 100%;
   border: none;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: #fff;
   font-family: inherit;
-  font-size: 1.5rem;
-  text-align: center;
+  font-size: 1.6rem;
+  /* text-align: center; */
   color: #333;
-  padding: 0.3rem 1rem;
+  padding: 1.25rem 2rem;
   border-radius: 0.7rem;
+  font-family: 'Righteous', cursive;
+
   transition: all 0.3s;
+}
+
+.form__input::placeholder{
+  font-family: inherit;
+  font-size: 1.6rem;
 }
 
 .form__input:focus {
   outline: none;
-  background-color: rgba(255, 255, 255, 0.6);
+  /* background-color: rgba(255, 255, 255, 0.6); */
 }
 
 .form__label {
@@ -386,3 +407,104 @@ h2 {
 .exp{
   margin-top: 1rem;
 }
+
+.transaction__heading{
+  font-family: 'Righteous', cursive;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.transaction__beneficiaries{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.beneficiary{
+  padding: 2.5rem 3rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background-color: #f3f3f3;
+}
+
+.beneficiary p {
+  margin-top: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  color: rgb(116, 116, 116);
+  font-weight: 500;
+}
+
+.beneficiary__img{
+  width: 150px;
+  border-radius: 20px;
+}
+
+.operation--loan-header{
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.operation--loan-header i {
+  font-size: 2rem;
+  color: #fff;
+  padding: 1rem;
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  border-radius: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.user__container{
+  cursor: pointer;
+}
+
+.user-img{
+  width: 40px;
+  border-radius: 13px;
+  position: relative;
+}
+
+.user__container:hover .user__container--options,
+.user__container:focus .user__container--options,
+.user__container:focus-within .user__container--options{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: all .3s;
+}
+
+.user__container--options{
+  background-color: rgba(255, 255, 255, 0.3);
+	position: absolute;
+	z-index: 100;
+	right: 7px;
+	box-shadow: .5px .5px 4px rgb(0,0,0,.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
+
+.user__container--options > *{
+  display: block;
+	background-color: rgba(255, 255, 255, 0.3);
+	border: none;
+	padding: 1rem;
+	cursor: pointer;
+	width: 100%;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* button{
+  border: none;
+  background-color: none;
+} */
