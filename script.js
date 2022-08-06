@@ -7,6 +7,7 @@
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
+  ownerNo: 1,
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -26,6 +27,7 @@ const account1 = {
 
 const account2 = {
   owner: 'Jessica Davis',
+  ownerNo: 2,
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
@@ -45,6 +47,7 @@ const account2 = {
 
 const account3 = {
   owner: 'Steven Thomas Williams',
+  ownerNo: 3,
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
@@ -64,6 +67,7 @@ const account3 = {
 
 const account4 = {
   owner: 'Sarah Smith',
+  ownerNo: 4,
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
@@ -93,8 +97,11 @@ const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
 
+const container = document.querySelector('.container');
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements__mov');
+const closeAccount = document.querySelector('.close-account');
+const modalContainer = document.querySelector('.operation');
 
 const btnLogin = document.querySelector('.login__btn');
 const btnTransfer = document.querySelector('.form__btn--transfer');
@@ -109,16 +116,17 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+const inputLogOut = document.querySelector('.log-out');
 
 ///////////////////////////////////////
 
 // Functions
-const createUsername = accs => {
-  accs.forEach(el => {
+const createUsername = (accs) => {
+  accs.forEach((el) => {
     el.userName = el.owner
       .toLowerCase()
       .split(' ')
-      .map(el => el[0])
+      .map((el) => el[0])
       .join('');
   });
 };
@@ -180,11 +188,11 @@ const calcBalance = function (acc) {
 // Calculate Summary
 const calcSummary = function (acc) {
   const incomes = acc.movements
-    .filter(el => el > 0)
+    .filter((el) => el > 0)
     .reduce((acc, el) => acc + el);
   labelSumIn.textContent = curFormat(incomes, acc.locale, acc.currency);
   const outcomes = acc.movements
-    .filter(el => el < 0)
+    .filter((el) => el < 0)
     .reduce((acc, el) => acc + el);
   labelSumOut.textContent = curFormat(
     Math.abs(outcomes),
@@ -192,49 +200,79 @@ const calcSummary = function (acc) {
     acc.currency
   );
   const interest = acc.movements
-    .filter(el => el > 0)
-    .map(el => el * (acc.interestRate / 100))
-    .filter(el => el > 1)
+    .filter((el) => el > 0)
+    .map((el) => el * (acc.interestRate / 100))
+    .filter((el) => el > 1)
     .reduce((acc, el) => acc + el);
   labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
 };
 
-// const timerCount = function () {
-//   let time = 300;
+const timerCount = function () {
+  let time = 300;
 
-//   const timerCountDown = function () {
-//     const min = String(Math.trunc(time / 60)).padStart(2, 0);
-//     const second = String(time % 60).padStart(2, 0);
+  const timerCountDown = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const second = String(time % 60).padStart(2, 0);
 
-//     labelTimer.textContent = `${min}:${second}`;
-//     if (time === 0) {
-//       clearInterval(timer);
-//       labelWelcome.textContent = 'Log in to get started';
-//       containerApp.style.opacity = 0;
-//     }
-//     time--;
-//   };
+    labelTimer.textContent = `${min}:${second}`;
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
 
-//   timerCountDown();
-//   const timer = setInterval(timerCountDown, 1000);
-//   return timer;
-// };
+  timerCountDown();
+  const timer = setInterval(timerCountDown, 1000);
+  return timer;
+};
+
+let filterBeneficiaries;
+const transactionBeneficiaries = function () {
+  filterBeneficiaries = accounts.filter(
+    (el) => el.ownerNo != currentAccount.ownerNo
+  );
+
+  document.querySelector('.transaction__beneficiaries').innerHTML = '';
+
+  filterBeneficiaries.forEach((el) => {
+    const html = `
+      <button class = "beneficiary beneficiary-1">
+        <img src="img/img-${el.ownerNo}.jpg" alt="${
+      el.owner
+    }" class="beneficiary__img">
+        <p class= "beneficiary__name">${el.owner.split(' ')[0]} ${
+      el.owner.split(' ')[1][0]
+    }</p>
+      </button>
+    `;
+
+    document
+      .querySelector('.transaction__beneficiaries')
+      .insertAdjacentHTML('beforeend', html);
+  });
+};
 
 ///////////////////////////////////////////
 // Event Handlers
 
 let currentAccount, timer;
-btnLogin.addEventListener('click', e => {
+btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
 
-  currentAccount = accounts.find(el => el.userName === loginFilter);
-
-  console.log(currentAccount);
+  currentAccount = accounts.find((el) => el.userName === loginFilter);
 
   if (currentAccount?.pin === +inputLoginPin.value) {
     labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
     labelName.textContent = `${currentAccount.owner}`;
+    loginSection.style.display = 'none';
+    inputLoginPin.value = inputLoginUsername.value = '';
+    container.style.display = 'block';
+  } else {
+    inputLoginPin.value = inputLoginUsername.value = '';
+    inputLoginPin.blur();
   }
   const date = new Date();
   labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, {
@@ -246,18 +284,21 @@ btnLogin.addEventListener('click', e => {
     year: 'numeric',
   }).format(date);
 
-  containerApp.style.opacity = 1;
-  containerApp.style.visibility = 'visible';
-  containerApp.style.display = 'grid';
-  inputLoginPin.value = inputLoginUsername.value = '';
-  inputLoginPin.blur();
-
   // if (timer) clearInterval(timer);
   // timer = timerCount();
 
+  transactionBeneficiaries();
   displayMovements(currentAccount);
   calcBalance(currentAccount);
   calcSummary(currentAccount);
+});
+
+inputLogOut.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginSection.style.display = 'grid';
+
+  container.style.display = 'none';
+  console.log('clicl');
 });
 
 // Transfer Functionalities
@@ -290,7 +331,7 @@ btnLogin.addEventListener('click', e => {
 //   timer = timerCount();
 // });
 
-// // loan Functionality
+// loan Functionality
 // btnLoan.addEventListener('click', e => {
 //   e.preventDefault();
 //   const loanAmount = +inputLoanAmount.value;
@@ -307,7 +348,7 @@ btnLogin.addEventListener('click', e => {
 //   timer = timerCount();
 // });
 
-// // Delete Account
+// Delete Account
 // btnClose.addEventListener('click', e => {
 //   e.preventDefault();
 //   if (
@@ -325,10 +366,104 @@ btnLogin.addEventListener('click', e => {
 //   inputClosePin.value = inputCloseUsername.value = '';
 // });
 
-// // Sort Account
+// Sort Account
 // let sorted = false;
 // btnSort.addEventListener('click', e => {
 //   e.preventDefault();
 //   displayMovements(currentAccount, !sorted);
 //   sorted = !sorted;
 // });
+
+const beneficiary = document.querySelectorAll('.transaction__beneficiaries');
+const closeModal = document.querySelector('.close-modal');
+const modal = document.querySelector('.modal');
+const loginSection = document.querySelector('.login-section');
+const overlay = document.querySelector('.overlay');
+
+const openM = function () {
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
+closeAccount.addEventListener('click', (e) => {
+  openM();
+  document.querySelector('.modal').innerHTML = '';
+  document.querySelector('.modal').classList.remove('operation--loan');
+  document.querySelector('.modal').classList.add('operation--close');
+
+  const close = `
+      <div class="operation--header operation--header-close">
+      <i class="fa-solid fa-key"></i>
+      <h2>Close Account</h2>
+    </div>
+    <form class="form form--close">
+    <input type="text" class="form__input form__input--user" placeholder = "User Id"/>
+      <input
+      type="password"
+      maxlength="4"
+      class="form__input form__input--pin"
+      placeholder = "Pin"
+    />
+      <button class="form__btn form__btn--close">
+        <i class="fa-solid fa-arrow-right-long"></i>
+      </button>
+    </form>
+    <button class="close-modal">&times;</button>`;
+
+  document.querySelector('.modal').insertAdjacentHTML('afterbegin', close);
+
+  document.querySelector('.form--close').style.gridTemplateColumns =
+    '1fr 1fr .4fr';
+
+  closeEvent();
+});
+
+beneficiary.forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    openM();
+    document.querySelector('.modal').innerHTML = '';
+    document.querySelector('.modal').classList.add('operation--loan');
+    document.querySelector('.modal').classList.remove('operation--close');
+
+    const html = `
+      <div class="operation--header operation--header-loan">
+        <i class="fa-solid fa-money-bill-transfer"></i>
+        <h2>Transfer to: ${e.target.nextElementSibling.textContent}</h2>
+      </div>
+      <form class="form form--transfer">
+        <input
+          type="number"
+          class="form__input form__input--loan-amount"
+          placeholder="Amount"
+        />
+        <button class="form__btn form__btn--transfer">
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </button>
+        <!-- <label class="form__label form__label--loan">Amount</label> -->
+      </form>
+      <button class="close-modal">&times;</button>
+      `;
+
+    document.querySelector('.modal').insertAdjacentHTML('afterbegin', html);
+
+    closeEvent();
+  });
+});
+
+const closeEvent = function () {
+  const closeM = function () {
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
+  };
+
+  document.querySelector('.close-modal').addEventListener('click', () => {
+    closeM();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeM();
+    }
+  });
+};
