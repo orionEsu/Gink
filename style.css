@@ -12,7 +12,14 @@
 
 html {
   font-size: 62.5%;
+  /* font-size: 58%; */
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 500px){
+  html{
+    font-size: 58%;
+  }
 }
 
 body {
@@ -32,7 +39,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  /* padding-inline: 2rem; */
+  padding-top: 2rem;
 }
 
 .welcome {
@@ -114,6 +122,39 @@ nav {
   color: #777;
 }
 
+@media screen and (max-width: 1000px) {
+  .app{
+    grid-template-columns: 1fr !important;
+    gap: 7rem !important;
+    padding-bottom: 7rem;
+  }
+
+  .account__det{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    align-items: center;
+    row-gap: 3rem;
+  }
+
+  .balance{
+    margin-bottom: 0 !important;
+  }
+
+  .account__det--card{
+    width: min(400px, 100%);
+  }
+
+  .operation--loan{
+    width: min(400px, 100%);
+  }
+}
+
+
+@media screen and (max-width: 600px){
+  .beneficiary__img{
+    width: 75px !important;
+  }
+}
 /* MAIN */
 .app {
   position: relative;
@@ -124,6 +165,7 @@ nav {
   margin-top: 4rem;
   /* grid-template-rows: auto repeat(3, 15rem) auto; */
   gap: 10rem;
+  /* padding-inline: min(5rem, 3%); */
 
   /* NOTE This creates the fade in/out anumation */
   /* opacity: 0;
@@ -171,10 +213,14 @@ nav {
 
 .movements__row {
   padding: 2.25rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: center; */
   border-bottom: 1px solid #eee;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
 }
 
 .movements__type {
@@ -184,7 +230,7 @@ nav {
   color: #fff;
   padding: 0.1rem 1rem;
   border-radius: 5px;
-  margin-right: 2rem;
+  margin-right: auto;
 }
 
 .movements__date {
@@ -192,6 +238,7 @@ nav {
   text-transform: uppercase;
   font-weight: 500;
   color: #666;
+  margin-inline: auto;
 }
 
 .movements__type--deposit {
@@ -206,6 +253,7 @@ nav {
   font-size: 1.7rem;
   font-family: 'Righteous', cursive;
   /* margin-left: auto; */
+  margin-left: auto;
 }
 
 /* SUMMARY */
@@ -364,9 +412,9 @@ h2 {
 
 .container {
   display: none;
-  padding: 2rem;
   transition: all 0.3s ease;
   transition-delay: 0.03s;
+  padding-inline: 3rem;
 }
 
 .movements__header {
@@ -386,7 +434,7 @@ h2 {
   grid-template-columns: 1fr 1fr;
   align-content: center; */
   padding: 3rem 0rem;
-  /* padding-bottom: 2rem; */
+  /* padding-bottom: 4rem; */
 }
 
 .account__det--card {
@@ -415,7 +463,7 @@ h2 {
 .account__info {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding-bottom: 3rem;
+  padding-bottom: 4rem;
 }
 .movements__header {
   font-size: 1.4rem;
@@ -629,4 +677,8 @@ input[type='number'] {
 
 .form__btn--close {
   padding: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+ 
 }
