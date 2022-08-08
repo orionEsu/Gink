@@ -104,18 +104,16 @@ const closeAccount = document.querySelector('.close-account');
 const modalContainer = document.querySelector('.operation');
 
 const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
-const btnClose = document.querySelector('.form__btn--close');
+// const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
-const inputTransferTo = document.querySelector('.form__input--to');
-const inputTransferAmount = document.querySelector('.form__input--amount');
+
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
+// const inputCloseUsername = document.querySelector('.form__input--user');
+// const inputClosePin = document.querySelector('.form__input--pin');
 const inputLogOut = document.querySelector('.log-out');
 
 ///////////////////////////////////////
@@ -228,7 +226,7 @@ const timerCount = function () {
   return timer;
 };
 
-let filterBeneficiaries;
+let filterBeneficiaries, benefi;
 const transactionBeneficiaries = function () {
   filterBeneficiaries = accounts.filter(
     (el) => el.ownerNo != currentAccount.ownerNo
@@ -252,8 +250,81 @@ const transactionBeneficiaries = function () {
       .querySelector('.transaction__beneficiaries')
       .insertAdjacentHTML('beforeend', html);
   });
-};
 
+  benefi = document.querySelectorAll('.beneficiary');
+
+  benefi.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openM();
+      document.querySelector('.modal').innerHTML = '';
+      document.querySelector('.modal').classList.add('operation--loan');
+      document.querySelector('.modal').classList.remove('operation--close');
+
+      const html = `
+        <div class="operation--header operation--header-loan">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <h2>Transfer to: ${el.innerText}</h2>
+        </div>
+        <form class="form form--transfer">
+          <input
+            type="number"
+            class="form__input form__input--amount"
+            placeholder="Amount"
+          />
+          <button class="form__btn form__btn--transfer">
+            <i class="fa-solid fa-arrow-right-long"></i>
+          </button>
+          <!-- <label class="form__label form__label--loan">Amount</label> -->
+        </form>
+        <button class="close-modal">&times;</button>
+        `;
+      document.querySelector('.modal').insertAdjacentHTML('afterbegin', html);
+      closeEvent();
+
+      const btnTransfer = document.querySelector('.form__btn--transfer');
+      const inputTransferTo = el.innerText
+        .toLowerCase()
+        .split(' ')
+        .map((el) => el[0])
+        .join('');
+      const inputTransferAmount = document.querySelector(
+        '.form__input--amount'
+      );
+
+      btnTransfer.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log(inputTransferTo);
+
+        const recieverAccount = accounts.find(
+          (el) => el.userName === inputTransferTo
+        );
+
+        const amount = +inputTransferAmount.value;
+        const date = new Date();
+        if (
+          recieverAccount &&
+          amount &&
+          amount > 0 &&
+          recieverAccount !== currentAccount &&
+          currentAccount.balance > amount
+        ) {
+          currentAccount.movements.push(-amount);
+          currentAccount.movementsDates.push(date);
+          recieverAccount.movements.push(amount);
+          recieverAccount.movementsDates.push(date);
+          displayMovements(currentAccount);
+          calcBalance(currentAccount);
+          calcSummary(currentAccount);
+        }
+        inputTransferAmount.value = '';
+
+        if (timer) clearInterval(timer);
+        timer = timerCount();
+      });
+    });
+  });
+};
 ///////////////////////////////////////////
 // Event Handlers
 
@@ -284,8 +355,8 @@ btnLogin.addEventListener('click', (e) => {
     year: 'numeric',
   }).format(date);
 
-  // if (timer) clearInterval(timer);
-  // timer = timerCount();
+  if (timer) clearInterval(timer);
+  timer = timerCount();
 
   transactionBeneficiaries();
   displayMovements(currentAccount);
@@ -298,38 +369,9 @@ inputLogOut.addEventListener('click', (e) => {
   loginSection.style.display = 'grid';
 
   container.style.display = 'none';
-  console.log('clicl');
 });
 
 // Transfer Functionalities
-// btnTransfer.addEventListener('click', e => {
-//   e.preventDefault();
-
-//   const recieverAccount = accounts.find(
-//     el => el.userName === inputTransferTo.value
-//   );
-//   const amount = +inputTransferAmount.value;
-//   const date = new Date();
-//   if (
-//     recieverAccount &&
-//     amount &&
-//     amount > 0 &&
-//     recieverAccount !== currentAccount &&
-//     currentAccount.balance > amount
-//   ) {
-//     currentAccount.movements.push(-amount);
-//     currentAccount.movementsDates.push(date);
-//     recieverAccount.movements.push(amount);
-//     recieverAccount.movementsDates.push(date);
-//     displayMovements(currentAccount);
-//     calcBalance(currentAccount);
-//     calcSummary(currentAccount);
-//   }
-//   inputTransferAmount.value = inputTransferTo.value = '';
-
-//   if (timer) clearInterval(timer);
-//   timer = timerCount();
-// });
 
 // loan Functionality
 // btnLoan.addEventListener('click', e => {
@@ -349,22 +391,24 @@ inputLogOut.addEventListener('click', (e) => {
 // });
 
 // Delete Account
-// btnClose.addEventListener('click', e => {
-//   e.preventDefault();
-//   if (
-//     currentAccount.userName === inputCloseUsername.value &&
-//     currentAccount.pin === +inputClosePin.value
-//   ) {
-//     accounts.splice(
-//       accounts.findIndex(el => el.userName === inputCloseUsername.value),
-//       1
-//     );
-//     if (timer) clearInterval(timer);
-//     labelWelcome.textContent = 'Log in to get started';
-//     containerApp.style.opacity = 0;
-//   }
-//   inputClosePin.value = inputCloseUsername.value = '';
-// });
+const deleteAccount = function () {
+  btnClose.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (
+      currentAccount.userName === inputCloseUsername.value &&
+      currentAccount.pin === +inputClosePin.value
+    ) {
+      accounts.splice(
+        accounts.findIndex((el) => el.userName === inputCloseUsername.value),
+        1
+      );
+      if (timer) clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    inputClosePin.value = inputCloseUsername.value = '';
+  });
+};
 
 // Sort Account
 // let sorted = false;
@@ -416,38 +460,28 @@ closeAccount.addEventListener('click', (e) => {
     '1fr 1fr .4fr';
 
   closeEvent();
-});
 
-beneficiary.forEach((el) => {
-  el.addEventListener('click', (e) => {
+  const inputCloseUsername = document.querySelector('.form__input--user');
+  const inputClosePin = document.querySelector('.form__input--pin');
+  const btnClose = document.querySelector('.form__btn--close');
+
+  btnClose.addEventListener('click', (e) => {
     e.preventDefault();
-    openM();
-    document.querySelector('.modal').innerHTML = '';
-    document.querySelector('.modal').classList.add('operation--loan');
-    document.querySelector('.modal').classList.remove('operation--close');
+    if (
+      currentAccount.userName === inputCloseUsername.value &&
+      currentAccount.pin === +inputClosePin.value
+    ) {
+      accounts.splice(
+        accounts.findIndex((el) => el.userName === inputCloseUsername.value),
+        1
+      );
+      if (timer) clearInterval(timer);
 
-    const html = `
-      <div class="operation--header operation--header-loan">
-        <i class="fa-solid fa-money-bill-transfer"></i>
-        <h2>Transfer to: ${e.target.nextElementSibling.textContent}</h2>
-      </div>
-      <form class="form form--transfer">
-        <input
-          type="number"
-          class="form__input form__input--loan-amount"
-          placeholder="Amount"
-        />
-        <button class="form__btn form__btn--transfer">
-          <i class="fa-solid fa-arrow-right-long"></i>
-        </button>
-        <!-- <label class="form__label form__label--loan">Amount</label> -->
-      </form>
-      <button class="close-modal">&times;</button>
-      `;
-
-    document.querySelector('.modal').insertAdjacentHTML('afterbegin', html);
-
-    closeEvent();
+      loginSection.style.display = 'grid';
+      container.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+    // inputClosePin.value = inputCloseUsername.value = '';
   });
 });
 
