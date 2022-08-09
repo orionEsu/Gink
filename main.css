@@ -1,0 +1,547 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+@media (max-width: 500px) {
+  html {
+    font-size: 58%;
+  }
+}
+
+body {
+  font-family: "Righteous", cursive;
+  color: #333;
+  background-color: #f3f3f3;
+  height: 100vh;
+}
+
+img {
+  width: 100%;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+}
+
+.welcome {
+  font-size: 4rem;
+  font-family: "Cabin Sketch", cursive;
+}
+
+.logo {
+  height: 5.25rem;
+  width: auto;
+  margin: auto;
+}
+
+.login {
+  text-align: center;
+}
+.login > * {
+  margin-top: 2rem;
+}
+.login-section {
+  display: grid;
+  align-content: center;
+  height: 100%;
+  transition: all 0.2s;
+  position: absolute;
+  z-index: 100;
+  background-color: #f3f3f3;
+  width: 100%;
+}
+.login__input {
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  display: block;
+  font-family: inherit;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  font-family: "poppins", sans-serif;
+  width: min(300px, 100%);
+  margin-inline: auto;
+}
+.login__input:focus {
+  outline: none;
+  border: 2px solid #000;
+}
+.login__input::-moz-placeholder {
+  font-family: "poppins", sans-serif;
+  color: #bbb;
+}
+.login__input:-ms-input-placeholder {
+  font-family: "poppins", sans-serif;
+  color: #bbb;
+}
+.login__input::placeholder {
+  font-family: "poppins", sans-serif;
+  color: #bbb;
+}
+.login__btn {
+  border: none;
+  background: #fff;
+  font-size: 1.8rem;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: righteous, cursive;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem 4rem;
+  width: min(200px, 100%);
+}
+.login__btn i {
+  margin-left: 0.5rem;
+}
+.login__btn:hover, .login__btn:focus {
+  outline: none;
+  color: #777;
+}
+.login-logo {
+  width: 50px;
+  margin: auto;
+}
+
+.app {
+  position: relative;
+  max-width: 125rem;
+  margin: auto auto;
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  margin-top: 4rem;
+  gap: 10rem;
+}
+@media (max-width: 1000px) {
+  .app {
+    grid-template-columns: 1fr !important;
+    gap: 7rem !important;
+    padding-bottom: 7rem;
+  }
+}
+
+.balance {
+  margin-bottom: 3rem;
+}
+@media (max-width: 1000px) {
+  .balance {
+    margin-bottom: 0 !important;
+  }
+}
+.balance__label {
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: -0.2rem;
+}
+.balance__date {
+  font-size: 1.4rem;
+  color: #888;
+}
+.balance__value {
+  margin: 0.7rem 0;
+  font-size: 4.5rem;
+  font-weight: 700;
+}
+
+.movements {
+  grid-row: 2/span 3;
+  background-color: #fff;
+  border-radius: 1rem;
+  overflow: auto;
+  height: 35rem;
+  padding: 0 1rem;
+}
+.movements__row {
+  padding: 2.25rem 0;
+  border-bottom: 1px solid #eee;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+.movements__type {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+  padding: 0.1rem 1rem;
+  border-radius: 5px;
+  margin-right: auto;
+}
+.movements__type--deposit {
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+.movements__type--withdrawal {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+.movements__date {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #666;
+  margin-inline: auto;
+}
+.movements__value {
+  font-size: 1.7rem;
+  font-family: "Righteous", cursive;
+  margin-left: auto;
+}
+.movements__header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+  font-size: 1.4rem;
+}
+.movements__top {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+.movements__top__header {
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.summary {
+  grid-row: 5/6;
+  display: flex;
+  align-items: baseline;
+  padding: 0 0.3rem;
+  margin-top: 1rem;
+}
+.summary__label {
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-right: 0.8rem;
+}
+.summary__value {
+  font-size: 2.2rem;
+  margin-right: 2.5rem;
+  margin-top: 0.5rem;
+}
+.summary__value--in, .summary__value--interest {
+  color: #34a853;
+}
+.summary__value--out {
+  color: #fd0404;
+}
+
+.btn--sort {
+  margin-left: auto;
+  border: none;
+  background: none;
+  font-size: 1.3rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn--sort:hover, .btn--sort:focus {
+  outline: none;
+  color: #777;
+}
+
+.operation {
+  border-radius: 1.5rem;
+  padding: 3rem 4rem;
+  color: #333;
+}
+.operation h2 {
+  font-size: 2rem;
+}
+.operation--loan {
+  background-color: #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 1000px) {
+  .operation--loan {
+    width: min(400px, 100%);
+  }
+}
+.operation--close {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+.operation--close > * {
+  color: #fff;
+}
+.operation--close i {
+  font-size: 2.5rem;
+}
+.operation--header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.operation--header i {
+  font-size: 2rem;
+  color: #fff;
+}
+.operation--header-loan i {
+  padding: 1rem;
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  border-radius: 10px;
+}
+
+h2 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1.5fr 0.5fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.form--loan {
+  margin-top: 2rem;
+}
+.form__label {
+  font-size: 1.3rem;
+  text-align: center;
+}
+.form__label--loan {
+  grid-row: 2;
+}
+.form__input {
+  width: 100%;
+  border: none;
+  font-family: inherit;
+  font-size: 1.6rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #333;
+  padding: 1.25rem 2rem;
+  border-radius: 0.7rem;
+  font-family: "Righteous", cursive;
+  transition: all 0.3s;
+}
+.form__input::-moz-placeholder {
+  font-family: inherit;
+  font-size: 1.6rem;
+}
+.form__input:-ms-input-placeholder {
+  font-family: inherit;
+  font-size: 1.6rem;
+}
+.form__input::placeholder {
+  font-family: inherit;
+  font-size: 1.6rem;
+}
+.form__input:focus {
+  outline: none;
+}
+.form__btn {
+  border: none;
+  border-radius: 0.7rem;
+  font-size: 1.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.form__btn:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.form__btn--close {
+  padding: 1rem;
+}
+
+.logout-timer {
+  padding: 0 0.3rem;
+  margin-top: 1.9rem;
+  text-align: right;
+  font-size: 1.25rem;
+}
+
+.timer {
+  font-weight: 600;
+}
+
+.container {
+  display: none;
+  transition: all 0.3s ease;
+  transition-delay: 0.03s;
+  padding-inline: 3rem;
+}
+
+.account__det {
+  padding: 3rem 0rem;
+}
+@media (max-width: 1000px) {
+  .account__det {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    align-items: center;
+    row-gap: 3rem;
+  }
+}
+.account__det--card {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
+  max-width: 380px;
+  padding: 3rem;
+  font-size: 1.6rem;
+  font-family: "Righteous", cursive;
+  color: #888;
+}
+@media (max-width: 1000px) {
+  .account__det--card {
+    width: min(400px, 100%);
+  }
+}
+.account__det--card-exp {
+  display: flex;
+  justify-content: space-between;
+  margin: 2.5rem 0;
+  align-items: center;
+}
+.account__det--card-name {
+  display: flex;
+  justify-content: space-between;
+}
+.account__det--card-no {
+  display: flex;
+  gap: 4rem;
+  font-family: "Righteous", cursive;
+  font-weight: 700;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.account__info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-bottom: 4rem;
+}
+
+.transaction {
+  background-color: #fff;
+  padding: 3rem 5rem;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.transaction__heading {
+  font-family: "Righteous", cursive;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.transaction__beneficiaries {
+  display: grid;
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.beneficiary {
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+.beneficiary p {
+  margin-top: 1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+  color: rgb(116, 116, 116);
+  font-weight: 500;
+}
+.beneficiary__img {
+  width: 100px;
+  border-radius: 20px;
+}
+
+.user__container {
+  cursor: pointer;
+}
+.user__container:hover .user__container--options, .user__container:focus .user__container--options, .user__container:focus-within .user__container--options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: all 0.3s;
+}
+.user__container--options {
+  background-color: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  z-index: 100;
+  right: 7px;
+  box-shadow: 0.5px 0.5px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
+.user__container--options > * {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: "Poppins", sans-serif;
+}
+.user-img {
+  width: 40px;
+  border-radius: 13px;
+  position: relative;
+}
+
+.modal {
+  max-width: 500px;
+  background-color: rgb(219, 141, 141);
+  margin: auto;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+}
+
+.overlay {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+}
+
+.close-modal {
+  position: absolute;
+  top: 1.2rem;
+  right: 2rem;
+  font-size: 2.5rem;
+  font-family: 900;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.credit-card {
+  width: 25px;
+}
+
+@media (max-width: 600px) {
+  .beneficiary__img {
+    width: 75px !important;
+  }
+}/*# sourceMappingURL=main.css.map */
