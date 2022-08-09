@@ -6,7 +6,7 @@
 
 // Data
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Santiago Jimenez',
   ownerNo: 1,
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
@@ -26,7 +26,7 @@ const account1 = {
 };
 
 const account2 = {
-  owner: 'Jessica Davis',
+  owner: 'Charlotte Gin',
   ownerNo: 2,
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
@@ -46,7 +46,7 @@ const account2 = {
 };
 
 const account3 = {
-  owner: 'Steven Thomas Williams',
+  owner: 'Sofía Mercedes',
   ownerNo: 3,
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
@@ -66,7 +66,7 @@ const account3 = {
 };
 
 const account4 = {
-  owner: 'Sarah Smith',
+  owner: 'María Mateo',
   ownerNo: 4,
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
@@ -95,7 +95,6 @@ const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
-const labelTimer = document.querySelector('.timer');
 
 const container = document.querySelector('.container');
 const containerApp = document.querySelector('.app');
@@ -105,16 +104,19 @@ const modalContainer = document.querySelector('.operation');
 
 const btnLogin = document.querySelector('.login__btn');
 const btnLoan = document.querySelector('.form__btn--loan');
-// const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
 
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-// const inputCloseUsername = document.querySelector('.form__input--user');
-// const inputClosePin = document.querySelector('.form__input--pin');
 const inputLogOut = document.querySelector('.log-out');
+
+const beneficiary = document.querySelectorAll('.transaction__beneficiaries');
+const closeModal = document.querySelector('.close-modal');
+const modal = document.querySelector('.modal');
+const loginSection = document.querySelector('.login-section');
+const overlay = document.querySelector('.overlay');
 
 ///////////////////////////////////////
 
@@ -205,27 +207,7 @@ const calcSummary = function (acc) {
   labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
 };
 
-const timerCount = function () {
-  let time = 300;
-
-  const timerCountDown = function () {
-    const min = String(Math.trunc(time / 60)).padStart(2, 0);
-    const second = String(time % 60).padStart(2, 0);
-
-    labelTimer.textContent = `${min}:${second}`;
-    if (time === 0) {
-      clearInterval(timer);
-      labelWelcome.textContent = 'Log in to get started';
-      containerApp.style.opacity = 0;
-    }
-    time--;
-  };
-
-  timerCountDown();
-  const timer = setInterval(timerCountDown, 1000);
-  return timer;
-};
-
+// Display beneficiaries
 let filterBeneficiaries, benefi;
 const transactionBeneficiaries = function () {
   filterBeneficiaries = accounts.filter(
@@ -294,7 +276,6 @@ const transactionBeneficiaries = function () {
 
       btnTransfer.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log(inputTransferTo);
 
         const recieverAccount = accounts.find(
           (el) => el.userName === inputTransferTo
@@ -318,17 +299,70 @@ const transactionBeneficiaries = function () {
           calcSummary(currentAccount);
         }
         inputTransferAmount.value = '';
-
-        if (timer) clearInterval(timer);
-        timer = timerCount();
+        closeM();
       });
     });
   });
 };
+
+// Delete Account
+const deleteAccount = function () {
+  btnClose.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (
+      currentAccount.userName === inputCloseUsername.value &&
+      currentAccount.pin === +inputClosePin.value
+    ) {
+      accounts.splice(
+        accounts.findIndex((el) => el.userName === inputCloseUsername.value),
+        1
+      );
+    }
+    inputClosePin.value = inputCloseUsername.value = '';
+  });
+};
+
+// Close Modal
+let closeM;
+const closeEvent = function () {
+  closeM = function () {
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
+  };
+
+  document.querySelector('.close-modal').addEventListener('click', () => {
+    closeM();
+  });
+
+  // Close Modal on Keypress
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeM();
+    }
+  });
+};
+
+// Sort Account
+let sorted = false;
+const sort = function () {
+  btnSort.addEventListener('click', (e) => {
+    e.preventDefault();
+    displayMovements(currentAccount, !sorted);
+    sorted = !sorted;
+  });
+};
+
+// Open Modal
+const openM = function () {
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
 ///////////////////////////////////////////
 // Event Handlers
 
-let currentAccount, timer;
+// Login functionality
+let currentAccount;
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
@@ -355,15 +389,14 @@ btnLogin.addEventListener('click', (e) => {
     year: 'numeric',
   }).format(date);
 
-  if (timer) clearInterval(timer);
-  timer = timerCount();
-
   transactionBeneficiaries();
   displayMovements(currentAccount);
   calcBalance(currentAccount);
   calcSummary(currentAccount);
+  sort();
 });
 
+// Logout functionality
 inputLogOut.addEventListener('click', (e) => {
   e.preventDefault();
   loginSection.style.display = 'grid';
@@ -371,64 +404,22 @@ inputLogOut.addEventListener('click', (e) => {
   container.style.display = 'none';
 });
 
-// Transfer Functionalities
-
 // loan Functionality
-// btnLoan.addEventListener('click', e => {
-//   e.preventDefault();
-//   const loanAmount = +inputLoanAmount.value;
-//   const date = new Date().toISOString();
-//   if (currentAccount.movements.some(el => el > el * (10 / 100))) {
-//     currentAccount.movements.push(loanAmount);
-//     currentAccount.movementsDates.push(date);
-//     displayMovements(currentAccount);
-//     calcBalance(currentAccount);
-//     calcSummary(currentAccount);
-//   }
-//   inputLoanAmount.value = '';
-//   if (timer) clearInterval(timer);
-//   timer = timerCount();
-// });
+btnLoan.addEventListener('click', (e) => {
+  e.preventDefault();
+  const loanAmount = +inputLoanAmount.value;
+  const date = new Date().toISOString();
+  if (currentAccount.movements.some((el) => el > el * (10 / 100))) {
+    currentAccount.movements.push(loanAmount);
+    currentAccount.movementsDates.push(date);
+    displayMovements(currentAccount);
+    calcBalance(currentAccount);
+    calcSummary(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
 
-// Delete Account
-const deleteAccount = function () {
-  btnClose.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (
-      currentAccount.userName === inputCloseUsername.value &&
-      currentAccount.pin === +inputClosePin.value
-    ) {
-      accounts.splice(
-        accounts.findIndex((el) => el.userName === inputCloseUsername.value),
-        1
-      );
-      if (timer) clearInterval(timer);
-      labelWelcome.textContent = 'Log in to get started';
-      containerApp.style.opacity = 0;
-    }
-    inputClosePin.value = inputCloseUsername.value = '';
-  });
-};
-
-// Sort Account
-// let sorted = false;
-// btnSort.addEventListener('click', e => {
-//   e.preventDefault();
-//   displayMovements(currentAccount, !sorted);
-//   sorted = !sorted;
-// });
-
-const beneficiary = document.querySelectorAll('.transaction__beneficiaries');
-const closeModal = document.querySelector('.close-modal');
-const modal = document.querySelector('.modal');
-const loginSection = document.querySelector('.login-section');
-const overlay = document.querySelector('.overlay');
-
-const openM = function () {
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-
+// Close account functionality
 closeAccount.addEventListener('click', (e) => {
   openM();
   document.querySelector('.modal').innerHTML = '';
@@ -475,7 +466,6 @@ closeAccount.addEventListener('click', (e) => {
         accounts.findIndex((el) => el.userName === inputCloseUsername.value),
         1
       );
-      if (timer) clearInterval(timer);
 
       loginSection.style.display = 'grid';
       container.style.display = 'none';
@@ -484,20 +474,3 @@ closeAccount.addEventListener('click', (e) => {
     // inputClosePin.value = inputCloseUsername.value = '';
   });
 });
-
-const closeEvent = function () {
-  const closeM = function () {
-    modal.classList.add('hidden');
-    overlay.classList.add('hidden');
-  };
-
-  document.querySelector('.close-modal').addEventListener('click', () => {
-    closeM();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeM();
-    }
-  });
-};
