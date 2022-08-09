@@ -28,12 +28,12 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
     <title>Gink</title>
   </head>
   <body class="">
     <div class="login-section">
-      <img src="logo.png" alt="Logo" srcset="" class="login-logo" />
+      <img src="img/logo.png" alt="Logo" srcset="" class="login-logo" />
       <form action="" class="login">
         <input
           type="text"
@@ -56,8 +56,7 @@
 
     <section class="container">
       <nav>
-        <!-- <p class="welcome">Log in to get started</p> -->
-        <img src="logo.png" alt="Logo" class="logo" />
+        <img src="img/logo.png" alt="Logo" class="logo" />
 
         <div class="user__container">
           <img src="img/img-1.jpg" alt="Image of a person" class="user-img" />
@@ -67,21 +66,6 @@
             <button class="close-account">Close account</button>
           </div>
         </div>
-        <!-- <form class="login">
-            <input
-              type="text"
-              placeholder="user"
-              class="login__input login__input--user"
-            />
-    
-            <input
-              type="password"
-              placeholder="PIN"
-              maxlength="4"
-              class="login__input login__input--pin"
-            />
-            <button class="login__btn">&rarr;</button>
-          </form> -->
       </nav>
 
       <main class="app">
@@ -101,7 +85,7 @@
                 <div class="account__det--card-name">
                   <p>Card</p>
                   <img
-                    src="credit-card-solid.svg"
+                    src="img/credit-card-solid.svg"
                     alt="image of a credit card"
                     class="credit-card"
                   />
@@ -151,12 +135,11 @@
               <button class="form__btn form__btn--loan">
                 <i class="fa-solid fa-arrow-right-long"></i>
               </button>
-              <!-- <label class="form__label form__label--loan">Amount</label> -->
             </form>
           </div>
         </section>
 
-        <section class="transactions">
+        <section class="transaction">
           <div class="transaction__header">
             <p class="transaction__heading">Transfer funds to</p>
 
@@ -192,56 +175,11 @@
               </div>
             </div>
           </div>
-
-          <!-- OPERATION: TRANSFERS -->
-          <!-- <div class="operation operation--transfer">
-              <h2>Transfer money</h2>
-              <form class="form form--transfer">
-                <input type="text" class="form__input form__input--to" />
-                <input type="number" class="form__input form__input--amount" />
-                <button class="form__btn form__btn--transfer">&rarr;</button>
-                <label class="form__label">Transfer to</label>
-                <label class="form__label">Amount</label>
-              </form>
-            </div> -->
-
-          <!-- OPERATION: CLOSE -->
-          <!-- <div class="operation operation--close">
-              <h2>Close account</h2>
-              <form class="form form--close">
-                <input type="text" class="form__input form__input--user" />
-                <input
-                  type="password"
-                  maxlength="4"
-                  class="form__input form__input--pin"
-                />
-                <button class="form__btn form__btn--close">&rarr;</button>
-                <label class="form__label">Confirm user</label>
-                <label class="form__label">Confirm PIN</label>
-              </form>
-            </div> -->
         </section>
       </main>
     </section>
 
-    <div class="modal operation operation--loan hidden">
-      <!-- <div class="operation--header operation--header-loan">
-        <i class="fa-solid fa-money-bill-transfer"></i>
-        <h2>Transfer to: <span class="">Esu</span></h2>
-      </div>
-      <form class="form form--transfer">
-        <input
-          type="number"
-          class="form__input form__input--loan-amount"
-          placeholder="Amount"
-        />
-        <button class="form__btn form__btn--transfer">
-          <i class="fa-solid fa-arrow-right-long"></i>
-        </button>
-      </form>
-      <button class="close-modal">&times;</button> -->
-    </div>
-
+    <div class="modal operation operation--loan hidden"></div>
     <div class="overlay hidden"></div>
 
     <script src="script.js"></script>
