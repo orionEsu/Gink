@@ -87,6 +87,8 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
+console.log(accounts[0].movements.reduce((acc, el) => acc + el, 0));
+
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelName = document.querySelector('.first__name');
@@ -105,18 +107,27 @@ const modalContainer = document.querySelector('.operation');
 const btnLogin = document.querySelector('.login__btn');
 const btnLoan = document.querySelector('.form__btn--loan');
 const btnSort = document.querySelector('.btn--sort');
+const btnSignup = document.querySelector('.signup__btn');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
-
+const inputSignupUsername = document.querySelector('.signup__input--user');
+const inputSignupPin = document.querySelector('.signup__input--pin');
+const inputSignupFirstName = document.querySelector(
+  '.signup__input--user-firstname'
+);
+const inputSignupLastName = document.querySelector(
+  '.signup__input--user-lastname'
+);
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputLogOut = document.querySelector('.log-out');
+const btnLogOut = document.querySelector('.log-out');
 
 const beneficiary = document.querySelectorAll('.transaction__beneficiaries');
 const closeModal = document.querySelector('.close-modal');
 const modal = document.querySelector('.modal');
-const loginSection = document.querySelector('.login-section');
+const loginSection = document.querySelector('.log-section');
 const overlay = document.querySelector('.overlay');
+const userImg = document.querySelector('.user-img');
 
 ///////////////////////////////////////
 
@@ -181,30 +192,46 @@ const displayMovements = function (acc, sort = false) {
 
 // Calculate Balance
 const calcBalance = function (acc) {
-  acc.balance = acc.movements.reduce((acc, el) => acc + el, 0);
-  labelBalance.textContent = curFormat(acc.balance, acc.locale, acc.currency);
+  // console.log(acc.movements.length);
+
+  if (acc.movements.length === 0) {
+    labelBalance.textContent = curFormat(1000, acc.locale, acc.currency);
+  } else {
+    acc.balance = acc.movements.reduce((acc, el) => acc + el, 0);
+    labelBalance.textContent = curFormat(acc.balance, acc.locale, acc.currency);
+  }
 };
 
 // Calculate Summary
 const calcSummary = function (acc) {
-  const incomes = acc.movements
-    .filter((el) => el > 0)
-    .reduce((acc, el) => acc + el);
-  labelSumIn.textContent = curFormat(incomes, acc.locale, acc.currency);
-  const outcomes = acc.movements
-    .filter((el) => el < 0)
-    .reduce((acc, el) => acc + el);
-  labelSumOut.textContent = curFormat(
-    Math.abs(outcomes),
-    acc.locale,
-    acc.currency
-  );
-  const interest = acc.movements
-    .filter((el) => el > 0)
-    .map((el) => el * (acc.interestRate / 100))
-    .filter((el) => el > 1)
-    .reduce((acc, el) => acc + el);
-  labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
+  if (acc.movements.length === 0) {
+    return;
+  } else {
+    const incomes = acc.movements
+      .filter((el) => el > 0)
+      .reduce((acc, el) => acc + el);
+    labelSumIn.textContent = curFormat(incomes, acc.locale, acc.currency);
+
+    const outcomes = acc.movements
+      .filter((el) => el < 0)
+      .reduce((acc, el) => acc + el);
+    labelSumOut.textContent = curFormat(
+      Math.abs(outcomes),
+      acc.locale,
+      acc.currency
+    );
+
+    const interest = acc.movements
+      .filter((el) => el > 0)
+      .map((el) => el * (acc.interestRate / 100))
+      .filter((el) => el > 1)
+      .reduce((acc, el) => acc + el);
+    labelSumInterest.textContent = curFormat(
+      interest,
+      acc.locale,
+      acc.currency
+    );
+  }
 };
 
 // Display beneficiaries
@@ -290,6 +317,7 @@ const transactionBeneficiaries = function () {
           recieverAccount !== currentAccount &&
           currentAccount.balance > amount
         ) {
+          console.log(currentAccount);
           currentAccount.movements.push(-amount);
           currentAccount.movementsDates.push(date);
           recieverAccount.movements.push(amount);
@@ -358,6 +386,15 @@ const openM = function () {
   overlay.classList.remove('hidden');
 };
 
+const profileImg = function (acc) {
+  const html = `
+    <img src="img/img-${acc.ownerNo}.jpg" alt="Image of a person" class="user-img"></img>
+  `;
+
+  document
+    .querySelector('.user__container')
+    .insertAdjacentHTML('beforeend', html);
+};
 ///////////////////////////////////////////
 // Event Handlers
 
@@ -366,7 +403,8 @@ let currentAccount;
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
-
+  console.log(currentAccount);
+  console.log(accounts);
   currentAccount = accounts.find((el) => el.userName === loginFilter);
 
   if (currentAccount?.pin === +inputLoginPin.value) {
@@ -393,15 +431,20 @@ btnLogin.addEventListener('click', (e) => {
   displayMovements(currentAccount);
   calcBalance(currentAccount);
   calcSummary(currentAccount);
+  profileImg(currentAccount);
   sort();
 });
 
 // Logout functionality
-inputLogOut.addEventListener('click', (e) => {
+btnLogOut.addEventListener('click', (e) => {
   e.preventDefault();
   loginSection.style.display = 'grid';
-
+  document.querySelector('.login').classList.remove('hidden');
+  document.querySelector('.signup').classList.add('hidden');
   container.style.display = 'none';
+  currentAccount = {};
+  console.log(accounts[4]);
+  console.log(currentAccount, accounts);
 });
 
 // loan Functionality
@@ -473,4 +516,52 @@ closeAccount.addEventListener('click', (e) => {
     }
     // inputClosePin.value = inputCloseUsername.value = '';
   });
+});
+
+btnSignup.addEventListener('click', (e) => {
+  e.preventDefault();
+  const newAccount = {
+    owner: ''.concat(
+      inputSignupFirstName.value.charAt(0).toUpperCase() +
+        inputSignupFirstName.value.slice(1),
+      ' ',
+      inputSignupLastName.value.charAt(0).toUpperCase() +
+        inputSignupLastName.value.slice(1)
+    ),
+    movements: [],
+    interestRate: 1.5,
+    pin: inputSignupPin.value,
+    movementsDates: [],
+    currency: 'USD',
+    locale: navigator.language,
+    userName: inputSignupUsername.value,
+  };
+
+  accounts.push(newAccount);
+  currentAccount = accounts.find(
+    (el) => el.userName === inputSignupUsername.value
+  );
+  labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
+  labelName.textContent = `${currentAccount.owner}`;
+  loginSection.style.display = 'none';
+  inputLoginPin.value = inputLoginUsername.value = '';
+  container.style.display = 'block';
+
+  const date = new Date();
+  labelDate.textContent = new Intl.DateTimeFormat(navigator.language, {
+    hourCycle: 'h24',
+    hour: '2-digit',
+    minute: '2-digit',
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+  }).format(date);
+
+  transactionBeneficiaries();
+  displayMovements(currentAccount);
+  calcBalance(currentAccount);
+  calcSummary(currentAccount);
+  sort();
+  profileImg(currentAccount);
+  console.log(transactionBeneficiaries);
 });
