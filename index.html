@@ -15,6 +15,10 @@
       href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Burned&family=Rubik+Marker+Hatch&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -32,34 +36,71 @@
     <title>Gink</title>
   </head>
   <body class="">
-    <div class="login-section">
-      <img src="img/logo.png" alt="Logo" srcset="" class="login-logo" />
-      <form action="" class="login">
+    <div class="log-section">
+      <!-- <img src="img/logo.png" alt="Logo" srcset="" class="login-logo" /> -->
+      <p class="logo">Gink</p>
+
+      <form action="" class="log login hidden">
         <input
           type="text"
-          placeholder="user"
-          class="login__input login__input--user"
+          placeholder="user id"
+          class="log__input login__input--user"
         />
 
         <input
           type="password"
-          placeholder="PIN"
+          placeholder="pin"
           maxlength="4"
-          class="login__input login__input--pin"
+          class="log__input login__input--pin"
         />
-        <button class="login__btn">
+        <button class="log__btn login__btn">
           login
           <i class="fa-solid fa-arrow-right-long"></i>
         </button>
       </form>
+
+      <form action="" class="log signup">
+        <input
+          type="text"
+          placeholder="firstname"
+          class="log__input signup__input--user-firstname"
+        />
+        <input
+          type="text"
+          placeholder="lastname"
+          class="log__input signup__input--user-lastname"
+        />
+        <input
+          type="text"
+          placeholder="user id"
+          class="log__input signup__input--user"
+        />
+
+        <input
+          type="password"
+          placeholder="pin"
+          maxlength="4"
+          class="log__input signup__input--pin"
+        />
+
+        <button class="log__btn signup__btn">
+          Signup
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </button>
+      </form>
+
+      <!-- <p class="signup-login">have an account <button class="alternative">login</button></p> -->
     </div>
 
     <section class="container">
       <nav>
-        <img src="img/logo.png" alt="Logo" class="logo" />
+        <div class="logo__info">
+          <!-- <img src="img/logo.png" alt="Logo" class="logo" /> -->
+          <p class="logo">Gink</p>
+          <h2 class="welcome">Welcome</h2>
+        </div>
 
         <div class="user__container">
-          <img src="img/img-1.jpg" alt="Image of a person" class="user-img" />
 
           <div class="user__container--options">
             <button class="log-out">Log out</button>
@@ -71,8 +112,6 @@
       <main class="app">
         <section class="account">
           <div class="">
-            <h2 class="welcome">Welcome</h2>
-
             <div class="account__det">
               <div class="balance">
                 <p class="balance__label">Available Balance:</p>
