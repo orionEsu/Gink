@@ -17,7 +17,7 @@ html {
 
 body {
   font-family: 'Righteous', cursive;
-  color: #333;
+  color: #888;
   background-color: #f3f3f3;
   height: 100vh;
 }
@@ -30,21 +30,36 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 4rem;
+  // padding-inline: 3rem;
 }
 
 .welcome {
-  font-size: 4rem;
-  font-family: 'Cabin Sketch', cursive;
+  font-size: 3rem;
+  // font-family: 'Cabin Sketch', cursive;
+  font-family: 'poppins', sans-serif;
 }
 
 .logo {
-  height: 5.25rem;
-  width: auto;
-  margin: auto;
+  // height: 5.25rem;
+  // width: auto;
+  // margin: auto;
+  font-family: 'Rubik Burned', cursive;
+  text-align: center;
+  font-size: 2.5rem;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
 }
 
-.login {
+// .login {
+//   display: none;
+// }
+
+.log {
   text-align: center;
 
   & > * {
@@ -58,7 +73,9 @@ nav {
     transition: all 0.2s;
     position: absolute;
     z-index: 100;
-    background-color: #f3f3f3;
+    background-image: url(img/back.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
   }
 
@@ -68,14 +85,17 @@ nav {
     display: block;
     font-family: inherit;
     border-radius: 0.5rem;
-    border: 2px solid #ccc;
+    // border: 2px solid #ccc;
+    outline: none;
+    border: none;
     font-family: 'poppins', sans-serif;
     width: min(300px, 100%);
     margin-inline: auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
 
     &:focus {
-      outline: none;
-      border: 2px solid #000;
+      outline: 2px solid rgba(255, 255, 255, 0.9);
     }
 
     &::placeholder {
@@ -86,7 +106,8 @@ nav {
 
   &__btn {
     border: none;
-    background: #fff;
+    // background: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
     font-size: 1.8rem;
     color: inherit;
     cursor: pointer;
@@ -101,17 +122,45 @@ nav {
       margin-left: 0.5rem;
     }
 
-    &:hover,
-    &:focus {
-      outline: none;
-      color: #777;
-    }
+    // &:hover,
+    // &:focus {
+    //   outline: none;
+    //   color: #777;
+    // }
   }
 
   &-logo {
     width: 50px;
     margin: auto;
   }
+}
+
+.signup {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  margin: auto;
+
+  &-login {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #fff;
+  }
+
+  &__btn{
+    grid-column: span 2;
+  }
+}
+.alternative {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 1px solid white;
 }
 
 .app {
@@ -157,11 +206,13 @@ nav {
 
 .movements {
   grid-row: 2 / span 3;
-  background-color: #fff;
+  // background-color: #fff;
   border-radius: 1rem;
   overflow: auto;
-  height: 35rem;
+  // height: 35rem;
+  height: 30rem;
   padding: 0 1rem;
+  color: #fff;
 
   &__row {
     padding: 2.25rem 0;
@@ -176,17 +227,19 @@ nav {
     font-size: 1.1rem;
     text-transform: uppercase;
     font-weight: 500;
-    color: #fff;
+    // color: #fff;
     padding: 0.1rem 1rem;
     border-radius: 5px;
     margin-right: auto;
 
     &--deposit {
-      background-image: linear-gradient(to top left, #39b385, #9be15d);
+      // background-image: linear-gradient(to top left, #39b385, #9be15d);
+      background-color: #34a853;
     }
 
     &--withdrawal {
-      background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+      // background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+      background-color: rgba(#fd0404, 0.6);
     }
   }
 
@@ -194,7 +247,8 @@ nav {
     font-size: 1.1rem;
     text-transform: uppercase;
     font-weight: 500;
-    color: #666;
+    // color: #666;
+    color: #fff;
     margin-inline: auto;
   }
 
@@ -202,6 +256,7 @@ nav {
     font-size: 1.7rem;
     font-family: 'Righteous', cursive;
     margin-left: auto;
+    color: #fff;
   }
 
   &__header {
@@ -220,6 +275,7 @@ nav {
     &__header {
       font-size: 2.2rem;
       font-weight: 600;
+      color: #fff;
     }
   }
 }
@@ -249,7 +305,7 @@ nav {
     }
 
     &--out {
-      color: #fd0404;
+      color: rgba(#fd0404, 0.7);
     }
   }
 }
@@ -261,6 +317,7 @@ nav {
   font-size: 1.3rem;
   font-weight: 500;
   cursor: pointer;
+  color: #999;
 
   &:hover,
   &:focus {
@@ -275,12 +332,15 @@ nav {
   color: #333;
 
   h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    color: #fff;
   }
 
   &--loan {
     background-color: #fff;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    // background-image: linear-gradient(to right, #e96443, #904a95);
+    // position: fixed;
 
     @media (max-width: 1000px) {
       width: min(400px, 100%);
@@ -305,12 +365,12 @@ nav {
     gap: 1rem;
 
     i {
-      font-size: 2rem;
+      font-size: 1.8rem;
       color: #fff;
     }
 
     &-loan i {
-      padding: 1rem;
+      padding: 0.6rem;
       background-image: linear-gradient(to top left, #39b385, #9be15d);
       border-radius: 10px;
     }
@@ -320,7 +380,7 @@ nav {
 h2 {
   font-size: 1.7rem;
   font-weight: 600;
-  color: #333;
+  color: #fff;
 }
 
 .form {
@@ -347,20 +407,24 @@ h2 {
     border: none;
     font-family: inherit;
     font-size: 1.6rem;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    // border: 1px solid rgba(0, 0, 0, 0.3);
+    outline: none;
     color: #333;
     padding: 1.25rem 2rem;
     border-radius: 0.7rem;
     font-family: 'Righteous', cursive;
     transition: all 0.3s;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
 
     &::placeholder {
       font-family: inherit;
       font-size: 1.6rem;
+      color: #fff;
     }
 
     &:focus {
-      outline: none;
+      outline: 2px solid rgba(255, 255, 255, 0.9);
     }
   }
 
@@ -369,7 +433,8 @@ h2 {
     border-radius: 0.7rem;
     font-size: 1.8rem;
     border: 1px solid rgba(0, 0, 0, 0.3);
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: all 0.3s;
 
@@ -400,11 +465,12 @@ h2 {
   transition: all 0.3s ease;
   transition-delay: 0.03s;
   padding-inline: 3rem;
+  background-color: #000;
 }
 
 .account {
   &__det {
-    padding: 3rem 0rem;
+    padding-bottom: 3rem;
 
     @media (max-width: 1000px) {
       display: grid;
@@ -414,14 +480,15 @@ h2 {
     }
 
     &--card {
-      background-color: #fff;
+      // background-color: #fff;
       border-radius: 20px;
       box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
       max-width: 380px;
       padding: 3rem;
       font-size: 1.6rem;
       font-family: 'Righteous', cursive;
-      color: #888;
+      color: #fff;
+      background-image: linear-gradient(to right, #e96443, #904a95);
 
       @media (max-width: 1000px) {
         width: min(400px, 100%);
@@ -468,6 +535,7 @@ h2 {
     font-family: 'Righteous', cursive;
     font-size: 2rem;
     margin-bottom: 2rem;
+    color: #fff;
   }
 
   &__beneficiaries {
@@ -482,6 +550,7 @@ h2 {
   border: none;
   cursor: pointer;
   background: none;
+  color: #999;
 
   p {
     margin-top: 1rem;
@@ -545,7 +614,7 @@ h2 {
   background-color: rgb(219, 141, 141);
   margin: auto;
   transform: translate(-50%, -50%);
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   z-index: 10;
@@ -554,7 +623,7 @@ h2 {
 .overlay {
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -588,12 +657,39 @@ h2 {
   }
 }
 
-// input::-webkit-outer-spin-button,
-// input::-webkit-inner-spin-button {
-//   -webkit-appearance: none;
-//   margin: 0;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+// .account__det--card,
+.operation--loan,
+.transaction {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.fa-arrow-right-long {
+  color: #fff;
+}
+
+// ::-webkit-scrollbar {
+//   width: 8px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   // background: #de3163;
+//   // background-color: rgba(255,255,255, .1);
+//   background-color: rgba(0,0,0,.5);
+//   border-radius: 10px;
+// }
+// ::-webkit-scrollbar-track {
+//   background: #f8f8f8;
 // }
 
-// input[type='number'] {
-//   -moz-appearance: textfield;
-// }
+// font-family: 'Rubik Burned', cursive;
+
+// font-family: 'Rubik Marker Hatch', cursive;

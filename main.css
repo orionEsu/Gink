@@ -18,7 +18,7 @@ html {
 
 body {
   font-family: "Righteous", cursive;
-  color: #333;
+  color: #888;
   background-color: #f3f3f3;
   height: 100vh;
 }
@@ -31,66 +31,75 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 4rem;
 }
 
 .welcome {
-  font-size: 4rem;
-  font-family: "Cabin Sketch", cursive;
+  font-size: 3rem;
+  font-family: "poppins", sans-serif;
 }
 
 .logo {
-  height: 5.25rem;
-  width: auto;
-  margin: auto;
+  font-family: "Rubik Burned", cursive;
+  text-align: center;
+  font-size: 2.5rem;
+}
+.logo__info {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-.login {
+.log {
   text-align: center;
 }
-.login > * {
+.log > * {
   margin-top: 2rem;
 }
-.login-section {
+.log-section {
   display: grid;
   align-content: center;
   height: 100%;
   transition: all 0.2s;
   position: absolute;
   z-index: 100;
-  background-color: #f3f3f3;
+  background-image: url(img/back.png);
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
 }
-.login__input {
+.log__input {
   padding: 1rem 2rem;
   font-size: 1.6rem;
   display: block;
   font-family: inherit;
   border-radius: 0.5rem;
-  border: 2px solid #ccc;
+  outline: none;
+  border: none;
   font-family: "poppins", sans-serif;
   width: min(300px, 100%);
   margin-inline: auto;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
-.login__input:focus {
-  outline: none;
-  border: 2px solid #000;
+.log__input:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
 }
-.login__input::-moz-placeholder {
+.log__input::-moz-placeholder {
   font-family: "poppins", sans-serif;
   color: #bbb;
 }
-.login__input:-ms-input-placeholder {
+.log__input:-ms-input-placeholder {
   font-family: "poppins", sans-serif;
   color: #bbb;
 }
-.login__input::placeholder {
+.log__input::placeholder {
   font-family: "poppins", sans-serif;
   color: #bbb;
 }
-.login__btn {
+.log__btn {
   border: none;
-  background: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
   font-size: 1.8rem;
   color: inherit;
   cursor: pointer;
@@ -101,16 +110,40 @@ nav {
   padding: 1rem 4rem;
   width: min(200px, 100%);
 }
-.login__btn i {
+.log__btn i {
   margin-left: 0.5rem;
 }
-.login__btn:hover, .login__btn:focus {
-  outline: none;
-  color: #777;
-}
-.login-logo {
+.log-logo {
   width: 50px;
   margin: auto;
+}
+
+.signup {
+  display: grid;
+  grid-template-columns: -webkit-max-content -webkit-max-content;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  margin: auto;
+}
+.signup-login {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+.signup__btn {
+  grid-column: span 2;
+}
+
+.alternative {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 1px solid white;
 }
 
 .app {
@@ -155,11 +188,11 @@ nav {
 
 .movements {
   grid-row: 2/span 3;
-  background-color: #fff;
   border-radius: 1rem;
   overflow: auto;
-  height: 35rem;
+  height: 30rem;
   padding: 0 1rem;
+  color: #fff;
 }
 .movements__row {
   padding: 2.25rem 0;
@@ -173,28 +206,28 @@ nav {
   font-size: 1.1rem;
   text-transform: uppercase;
   font-weight: 500;
-  color: #fff;
   padding: 0.1rem 1rem;
   border-radius: 5px;
   margin-right: auto;
 }
 .movements__type--deposit {
-  background-image: linear-gradient(to top left, #39b385, #9be15d);
+  background-color: #34a853;
 }
 .movements__type--withdrawal {
-  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+  background-color: rgba(253, 4, 4, 0.6);
 }
 .movements__date {
   font-size: 1.1rem;
   text-transform: uppercase;
   font-weight: 500;
-  color: #666;
+  color: #fff;
   margin-inline: auto;
 }
 .movements__value {
   font-size: 1.7rem;
   font-family: "Righteous", cursive;
   margin-left: auto;
+  color: #fff;
 }
 .movements__header {
   display: flex;
@@ -211,6 +244,7 @@ nav {
 .movements__top__header {
   font-size: 2.2rem;
   font-weight: 600;
+  color: #fff;
 }
 
 .summary {
@@ -235,7 +269,7 @@ nav {
   color: #34a853;
 }
 .summary__value--out {
-  color: #fd0404;
+  color: rgba(253, 4, 4, 0.7);
 }
 
 .btn--sort {
@@ -245,6 +279,7 @@ nav {
   font-size: 1.3rem;
   font-weight: 500;
   cursor: pointer;
+  color: #999;
 }
 .btn--sort:hover, .btn--sort:focus {
   outline: none;
@@ -257,7 +292,8 @@ nav {
   color: #333;
 }
 .operation h2 {
-  font-size: 2rem;
+  font-size: 1.8rem;
+  color: #fff;
 }
 .operation--loan {
   background-color: #fff;
@@ -283,11 +319,11 @@ nav {
   gap: 1rem;
 }
 .operation--header i {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #fff;
 }
 .operation--header-loan i {
-  padding: 1rem;
+  padding: 0.6rem;
   background-image: linear-gradient(to top left, #39b385, #9be15d);
   border-radius: 10px;
 }
@@ -295,7 +331,7 @@ nav {
 h2 {
   font-size: 1.7rem;
   font-weight: 600;
-  color: #333;
+  color: #fff;
 }
 
 .form {
@@ -319,34 +355,39 @@ h2 {
   border: none;
   font-family: inherit;
   font-size: 1.6rem;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  outline: none;
   color: #333;
   padding: 1.25rem 2rem;
   border-radius: 0.7rem;
   font-family: "Righteous", cursive;
   transition: all 0.3s;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 .form__input::-moz-placeholder {
   font-family: inherit;
   font-size: 1.6rem;
+  color: #fff;
 }
 .form__input:-ms-input-placeholder {
   font-family: inherit;
   font-size: 1.6rem;
+  color: #fff;
 }
 .form__input::placeholder {
   font-family: inherit;
   font-size: 1.6rem;
+  color: #fff;
 }
 .form__input:focus {
-  outline: none;
+  outline: 2px solid rgba(255, 255, 255, 0.9);
 }
 .form__btn {
   border: none;
   border-radius: 0.7rem;
   font-size: 1.8rem;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -374,10 +415,11 @@ h2 {
   transition: all 0.3s ease;
   transition-delay: 0.03s;
   padding-inline: 3rem;
+  background-color: #000;
 }
 
 .account__det {
-  padding: 3rem 0rem;
+  padding-bottom: 3rem;
 }
 @media (max-width: 1000px) {
   .account__det {
@@ -388,14 +430,14 @@ h2 {
   }
 }
 .account__det--card {
-  background-color: #fff;
   border-radius: 20px;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
   max-width: 380px;
   padding: 3rem;
   font-size: 1.6rem;
   font-family: "Righteous", cursive;
-  color: #888;
+  color: #fff;
+  background-image: linear-gradient(to right, #e96443, #904a95);
 }
 @media (max-width: 1000px) {
   .account__det--card {
@@ -437,6 +479,7 @@ h2 {
   font-family: "Righteous", cursive;
   font-size: 2rem;
   margin-bottom: 2rem;
+  color: #fff;
 }
 .transaction__beneficiaries {
   display: grid;
@@ -449,6 +492,7 @@ h2 {
   border: none;
   cursor: pointer;
   background: none;
+  color: #999;
 }
 .beneficiary p {
   margin-top: 1rem;
@@ -502,7 +546,7 @@ h2 {
   background-color: rgb(219, 141, 141);
   margin: auto;
   transform: translate(-50%, -50%);
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   z-index: 10;
@@ -511,7 +555,7 @@ h2 {
 .overlay {
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -544,4 +588,22 @@ h2 {
   .beneficiary__img {
     width: 75px !important;
   }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.operation--loan,
+.transaction {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.fa-arrow-right-long {
+  color: #fff;
 }/*# sourceMappingURL=main.css.map */
