@@ -125,6 +125,8 @@ nav {
   grid-template-rows: repeat(3, 1fr);
   justify-items: center;
   margin: auto;
+  -moz-column-gap: 3rem;
+       column-gap: 3rem;
 }
 .signup-login {
   margin-top: 2rem;

@@ -141,6 +141,7 @@ nav {
   grid-template-rows: repeat(3, 1fr);
   justify-items: center;
   margin: auto;
+  column-gap: 3rem;
 
   &-login {
     margin-top: 2rem;

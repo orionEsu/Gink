@@ -87,8 +87,6 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
-console.log(accounts[0].movements.reduce((acc, el) => acc + el, 0));
-
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelName = document.querySelector('.first__name');
@@ -192,7 +190,6 @@ const displayMovements = function (acc, sort = false) {
 
 // Calculate Balance
 const calcBalance = function (acc) {
-  // console.log(acc.movements.length);
 
   if (acc.movements.length === 0) {
     labelBalance.textContent = curFormat(1000, acc.locale, acc.currency);
@@ -317,7 +314,6 @@ const transactionBeneficiaries = function () {
           recieverAccount !== currentAccount &&
           currentAccount.balance > amount
         ) {
-          console.log(currentAccount);
           currentAccount.movements.push(-amount);
           currentAccount.movementsDates.push(date);
           recieverAccount.movements.push(amount);
@@ -403,20 +399,22 @@ let currentAccount;
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
-  console.log(currentAccount);
-  console.log(accounts);
+
   currentAccount = accounts.find((el) => el.userName === loginFilter);
 
   if (currentAccount?.pin === +inputLoginPin.value) {
     labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
     labelName.textContent = `${currentAccount.owner}`;
     loginSection.style.display = 'none';
+    document.querySelector('.login').classList.add('hidden');
+    document.querySelector('.signup').classList.add('hidden');
     inputLoginPin.value = inputLoginUsername.value = '';
     container.style.display = 'block';
   } else {
     inputLoginPin.value = inputLoginUsername.value = '';
     inputLoginPin.blur();
   }
+
   const date = new Date();
   labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, {
     hourCycle: 'h24',
@@ -442,9 +440,8 @@ btnLogOut.addEventListener('click', (e) => {
   document.querySelector('.login').classList.remove('hidden');
   document.querySelector('.signup').classList.add('hidden');
   container.style.display = 'none';
+
   currentAccount = {};
-  console.log(accounts[4]);
-  console.log(currentAccount, accounts);
 });
 
 // loan Functionality
@@ -520,6 +517,7 @@ closeAccount.addEventListener('click', (e) => {
 
 btnSignup.addEventListener('click', (e) => {
   e.preventDefault();
+
   const newAccount = {
     owner: ''.concat(
       inputSignupFirstName.value.charAt(0).toUpperCase() +
@@ -530,7 +528,7 @@ btnSignup.addEventListener('click', (e) => {
     ),
     movements: [],
     interestRate: 1.5,
-    pin: inputSignupPin.value,
+    pin: +inputSignupPin.value,
     movementsDates: [],
     currency: 'USD',
     locale: navigator.language,
@@ -563,5 +561,4 @@ btnSignup.addEventListener('click', (e) => {
   calcSummary(currentAccount);
   sort();
   profileImg(currentAccount);
-  console.log(transactionBeneficiaries);
 });
