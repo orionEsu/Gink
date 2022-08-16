@@ -165,7 +165,6 @@ const dateFormat = function (date, locale) {
 // Display Movements
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = ' ';
-
   const sortMovs = sort
     ? acc.movements.slice().sort((a, b) => a - b)
     : acc.movements;
@@ -190,25 +189,20 @@ const displayMovements = function (acc, sort = false) {
 
 // Calculate Balance
 const calcBalance = function (acc) {
-
-  if (acc.movements.length === 0) {
-    labelBalance.textContent = curFormat(1000, acc.locale, acc.currency);
-  } else {
-    acc.balance = acc.movements.reduce((acc, el) => acc + el, 0);
-    labelBalance.textContent = curFormat(acc.balance, acc.locale, acc.currency);
-  }
+  acc.balance = acc.movements.reduce((acc, el) => acc + el, 0);
+  labelBalance.textContent = curFormat(acc.balance, acc.locale, acc.currency);
 };
 
 // Calculate Summary
 const calcSummary = function (acc) {
-  if (acc.movements.length === 0) {
+  const incomes = acc.movements
+    .filter((el) => el > 0)
+    .reduce((acc, el) => acc + el);
+  labelSumIn.textContent = curFormat(incomes, acc.locale, acc.currency);
+
+  if (acc.movements.filter((el) => el < 0).length === 0) {
     return;
   } else {
-    const incomes = acc.movements
-      .filter((el) => el > 0)
-      .reduce((acc, el) => acc + el);
-    labelSumIn.textContent = curFormat(incomes, acc.locale, acc.currency);
-
     const outcomes = acc.movements
       .filter((el) => el < 0)
       .reduce((acc, el) => acc + el);
@@ -217,18 +211,15 @@ const calcSummary = function (acc) {
       acc.locale,
       acc.currency
     );
-
-    const interest = acc.movements
-      .filter((el) => el > 0)
-      .map((el) => el * (acc.interestRate / 100))
-      .filter((el) => el > 1)
-      .reduce((acc, el) => acc + el);
-    labelSumInterest.textContent = curFormat(
-      interest,
-      acc.locale,
-      acc.currency
-    );
   }
+
+  const interest = acc.movements
+    .filter((el) => el > 0)
+    .map((el) => el * (acc.interestRate / 100))
+    .filter((el) => el > 1)
+    .reduce((acc, el) => acc + el);
+  labelSumInterest.textContent = curFormat(interest, acc.locale, acc.currency);
+  // }
 };
 
 // Display beneficiaries
@@ -262,6 +253,7 @@ const transactionBeneficiaries = function () {
   benefi.forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
+      console.log(el);
       openM();
       document.querySelector('.modal').innerHTML = '';
       document.querySelector('.modal').classList.add('operation--loan');
@@ -273,11 +265,14 @@ const transactionBeneficiaries = function () {
           <h2>Transfer to: ${el.innerText}</h2>
         </div>
         <form class="form form--transfer">
-          <input
-            type="number"
-            class="form__input form__input--amount"
-            placeholder="Amount"
-          />
+          <div class = "form--transfer__container">
+            <input
+              type="number"
+              class="form__input form__input--amount"
+              placeholder="Amount"
+            />
+            <p class="error error-transfer"></p>
+          </div>
           <button class="form__btn form__btn--transfer">
             <i class="fa-solid fa-arrow-right-long"></i>
           </button>
@@ -288,26 +283,37 @@ const transactionBeneficiaries = function () {
       document.querySelector('.modal').insertAdjacentHTML('afterbegin', html);
       closeEvent();
 
-      const btnTransfer = document.querySelector('.form__btn--transfer');
-      const inputTransferTo = el.innerText
-        .toLowerCase()
-        .split(' ')
-        .map((el) => el[0])
-        .join('');
+      // const inputTransferTo = el.innerText
+      //   .toLowerCase()
+      //   .split(' ')
+      //   .map((el) => el[0])
+      //   .join('');
+
       const inputTransferAmount = document.querySelector(
         '.form__input--amount'
       );
 
+      // const fil = filterBeneficiaries.find(el=> el.owner === e.ta)
+
+      const btnTransfer = document.querySelector('.form__btn--transfer');
       btnTransfer.addEventListener('click', (e) => {
         e.preventDefault();
 
         const recieverAccount = accounts.find(
-          (el) => el.userName === inputTransferTo
+          (user) => user.owner === el.firstElementChild.alt
         );
 
         const amount = +inputTransferAmount.value;
         const date = new Date();
-        if (
+        const errorMessage = document.querySelector('.error-transfer');
+
+        if (amount === '' || amount === 0 || amount === null) {
+          errorMessage.innerHTML = 'Enter Amount';
+          errorMessage.classList.add('error-open');
+        } else if (amount < 0) {
+          errorMessage.innerHTML = 'Enter a valid amount';
+          errorMessage.classList.add('error-open');
+        } else if (
           recieverAccount &&
           amount &&
           amount > 0 &&
@@ -321,9 +327,10 @@ const transactionBeneficiaries = function () {
           displayMovements(currentAccount);
           calcBalance(currentAccount);
           calcSummary(currentAccount);
+          errorMessage.classList.remove('error-open');
+          closeM();
         }
         inputTransferAmount.value = '';
-        closeM();
       });
     });
   });
@@ -382,14 +389,10 @@ const openM = function () {
   overlay.classList.remove('hidden');
 };
 
+// Generate Profile image for current user
 const profileImg = function (acc) {
-  const html = `
-    <img src="img/img-${acc.ownerNo}.jpg" alt="Image of a person" class="user-img"></img>
-  `;
-
-  document
-    .querySelector('.user__container')
-    .insertAdjacentHTML('beforeend', html);
+  const userImg = document.querySelector('.user-img');
+  userImg.src = `img/img-${acc.ownerNo}.jpg`;
 };
 ///////////////////////////////////////////
 // Event Handlers
@@ -399,10 +402,41 @@ let currentAccount;
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
+  const errorMessage = document.querySelector('.error-username');
+  const errorPin = document.querySelector('.error-pin');
 
   currentAccount = accounts.find((el) => el.userName === loginFilter);
 
-  if (currentAccount?.pin === +inputLoginPin.value) {
+
+  // Validate Username
+  if (inputLoginUsername.value === '' || inputLoginUsername.value === null) {
+    errorMessage.innerHTML = 'Enter Username';
+    errorMessage.classList.add('error-open');
+  } else if (!currentAccount) {
+    errorMessage.innerHTML = 'Invalid Username';
+    errorMessage.classList.add('error-open');
+  } else {
+    errorMessage.classList.remove('error-open');
+  }
+
+
+  // Validate Pin
+  if (
+    +inputLoginPin.value === '' ||
+    +inputLoginPin.value === null ||
+    +inputLoginPin.value === 0
+  ) {
+    errorPin.innerHTML = 'Enter Pin';
+    errorPin.classList.add('error-open');
+  } else if (+inputLoginPin !== currentAccount?.pin) {
+    errorPin.innerHTML = 'Invalid Pin';
+    errorPin.classList.add('error-open');
+  } else {
+    errorPin.classList.remove('error-open');
+  }
+
+  // Validate and Login
+  if (currentAccount.userName && currentAccount?.pin === +inputLoginPin.value) {
     labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
     labelName.textContent = `${currentAccount.owner}`;
     loginSection.style.display = 'none';
@@ -410,7 +444,9 @@ btnLogin.addEventListener('click', (e) => {
     document.querySelector('.signup').classList.add('hidden');
     inputLoginPin.value = inputLoginUsername.value = '';
     container.style.display = 'block';
-  } else {
+    errorMessage.classList.remove('error-open');
+    errorPin.classList.remove('error-open');
+
     inputLoginPin.value = inputLoginUsername.value = '';
     inputLoginPin.blur();
   }
@@ -449,13 +485,26 @@ btnLoan.addEventListener('click', (e) => {
   e.preventDefault();
   const loanAmount = +inputLoanAmount.value;
   const date = new Date().toISOString();
-  if (currentAccount.movements.some((el) => el > el * (10 / 100))) {
+  const errorMessage = document.querySelector('.error-loan');
+
+  if (loanAmount === '' || loanAmount === null || loanAmount === 0) {
+    errorMessage.innerHTML = 'Enter Loan Amount';
+    errorMessage.classList.add('error-open');
+  } else if (loanAmount < 0) {
+    errorMessage.innerHTML = 'Enter Valid Amount';
+    errorMessage.classList.add('error-open');
+  } else if (
+    loanAmount > 0 &&
+    currentAccount.movements.some((el) => el > el * (10 / 100))
+  ) {
     currentAccount.movements.push(loanAmount);
     currentAccount.movementsDates.push(date);
     displayMovements(currentAccount);
     calcBalance(currentAccount);
     calcSummary(currentAccount);
+    errorMessage.classList.remove('error-open');
   }
+
   inputLoanAmount.value = '';
 });
 
@@ -515,50 +564,129 @@ closeAccount.addEventListener('click', (e) => {
   });
 });
 
+// Sign Up Functionality
+let newAccount;
 btnSignup.addEventListener('click', (e) => {
   e.preventDefault();
+  const errorFirstName = document.querySelector('.error-firstname');
+  const errorLastName = document.querySelector('.error-lastname');
+  const errorUserName = document.querySelector('.error-username');
+  const errorPassword = document.querySelector('.error-password');
+  const error = document.querySelector('.error');
 
-  const newAccount = {
-    owner: ''.concat(
-      inputSignupFirstName.value.charAt(0).toUpperCase() +
-        inputSignupFirstName.value.slice(1),
-      ' ',
-      inputSignupLastName.value.charAt(0).toUpperCase() +
-        inputSignupLastName.value.slice(1)
-    ),
-    movements: [],
-    interestRate: 1.5,
-    pin: +inputSignupPin.value,
-    movementsDates: [],
-    currency: 'USD',
-    locale: navigator.language,
-    userName: inputSignupUsername.value,
-  };
+  // First Name
+  if (
+    inputSignupFirstName.value === '' ||
+    inputSignupFirstName.value === null
+  ) {
+    errorFirstName.innerHTML = 'Enter First Name';
+    errorFirstName.classList.add('error-open');
+  } else {
+    errorFirstName.classList.remove('error-open');
+  }
 
-  accounts.push(newAccount);
-  currentAccount = accounts.find(
-    (el) => el.userName === inputSignupUsername.value
-  );
-  labelWelcome.textContent = `Welcome, ${currentAccount.owner.split(' ')[0]}`;
-  labelName.textContent = `${currentAccount.owner}`;
-  loginSection.style.display = 'none';
-  inputLoginPin.value = inputLoginUsername.value = '';
-  container.style.display = 'block';
+  // Last Name
+  if (inputSignupLastName.value === '' || inputSignupLastName.value === null) {
+    errorLastName.innerHTML = 'Enter Last Name';
+    errorLastName.classList.add('error-open');
+  } else {
+    errorLastName.classList.remove('error-open');
+  }
 
-  const date = new Date();
-  labelDate.textContent = new Intl.DateTimeFormat(navigator.language, {
-    hourCycle: 'h24',
-    hour: '2-digit',
-    minute: '2-digit',
-    month: 'long',
-    day: '2-digit',
-    year: 'numeric',
-  }).format(date);
+  // User Name
+  if (inputSignupUsername.value === '' || inputSignupUsername.value === null) {
+    errorUserName.innerHTML = 'Enter User Name';
+    errorUserName.classList.add('error-open');
+  } else {
+    const filter = accounts.filter(
+      (el) => el.userName === inputSignupUsername.value
+    );
+    if (filter.length !== 0) {
+      errorUserName.classList.add('error-open');
+      errorUserName.innerHTML = 'User Name already exists';
+    }
+  }
 
-  transactionBeneficiaries();
-  displayMovements(currentAccount);
-  calcBalance(currentAccount);
-  calcSummary(currentAccount);
-  sort();
-  profileImg(currentAccount);
+  // Pin
+  if (inputSignupPin.value === '' || inputSignupUsername === null) {
+    errorPassword.innerHTML = 'Enter Password';
+    errorPassword.classList.add('error-open');
+  } else {
+    errorPassword.classList.remove('error-open');
+  }
+
+  if (
+    inputSignupFirstName.value !== '' &&
+    inputSignupFirstName.value !== null &&
+    inputSignupLastName.value !== '' &&
+    inputSignupLastName.value !== null &&
+    inputSignupUsername !== '' &&
+    inputSignupUsername.value !== null &&
+    inputSignupPin.value !== '' &&
+    inputSignupPin.value !== null
+  ) {
+    if (
+      inputSignupUsername.value !== null &&
+      inputSignupUsername.value !== ''
+    ) {
+      const filter = accounts.filter(
+        (el) => el.userName === inputSignupUsername.value
+      );
+
+      if (filter.length !== 0) {
+        errorUserName.classList.add('error-open');
+        errorUserName.innerHTML = 'User Name already exists';
+      } else {
+        newAccount = {
+          owner: ''.concat(
+            inputSignupFirstName.value.charAt(0).toUpperCase() +
+              inputSignupFirstName.value.slice(1),
+            ' ',
+            inputSignupLastName.value.charAt(0).toUpperCase() +
+              inputSignupLastName.value.slice(1)
+          ),
+          movements: [1000],
+          interestRate: 1.5,
+          pin: +inputSignupPin.value,
+          movementsDates: [new Date()],
+          currency: 'USD',
+          locale: 'en-US',
+          ownerNo: 5,
+          userName: inputSignupUsername.value,
+        };
+
+        accounts.push(newAccount);
+
+        currentAccount = accounts.find(
+          (el) =>
+            el.userName === inputSignupUsername.value &&
+            el.pin === +inputSignupPin.value
+        );
+        labelWelcome.textContent = `Welcome, ${
+          currentAccount.owner.split(' ')[0]
+        }`;
+        labelName.textContent = `${currentAccount.owner}`;
+        loginSection.style.display = 'none';
+        inputLoginPin.value = inputLoginUsername.value = '';
+        container.style.display = 'block';
+
+        const date = new Date();
+        labelDate.textContent = new Intl.DateTimeFormat(navigator.language, {
+          hourCycle: 'h24',
+          hour: '2-digit',
+          minute: '2-digit',
+          month: 'long',
+          day: '2-digit',
+          year: 'numeric',
+        }).format(date);
+
+        transactionBeneficiaries();
+        displayMovements(currentAccount);
+        calcBalance(currentAccount);
+        calcSummary(currentAccount);
+        sort();
+        profileImg(currentAccount);
+      }
+    }
+  }
 });
