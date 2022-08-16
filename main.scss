@@ -44,10 +44,23 @@ nav {
   font-size: 2.5rem;
   margin-bottom: 3rem;
 
+  &__header {
+    @media (max-width: 500px) {
+      margin-bottom: 1rem;
+      text-align: left;
+      margin-right: auto;
+    }
+  }
+
   &__info {
     display: flex;
     align-items: center;
     gap: 2rem;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 0;
+    }
   }
 }
 
@@ -59,7 +72,7 @@ nav {
   }
 
   &__username,
-  &__pin{
+  &__pin {
     width: min(350px, 100%);
   }
 
@@ -75,6 +88,10 @@ nav {
 
 .log {
   text-align: center;
+
+  .logo {
+    text-align: center !important;
+  }
 
   &-section {
     display: grid;
@@ -148,8 +165,11 @@ nav {
   justify-content: center;
 
   @media (max-width: 700px) {
-    grid-template-columns: 1fr;
     width: min(300px, 100%);
+    display: block;
+    & > *:not(:last-child) {
+      margin-bottom: 3rem;
+    }
   }
 
   div {
@@ -345,7 +365,7 @@ nav {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 
     @media (max-width: 1000px) {
-      width: min(400px, 100%);
+      width: min(100%, 400px);
     }
   }
 
@@ -503,7 +523,7 @@ h2 {
       background-image: linear-gradient(to right, #e96443, #904a95);
 
       @media (max-width: 1000px) {
-        width: min(400px, 100%);
+        width: min(100%, 400px);
       }
 
       &-exp {
@@ -553,6 +573,7 @@ h2 {
   &__beneficiaries {
     display: grid;
     display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     margin-top: 3rem;
   }
@@ -622,7 +643,6 @@ h2 {
 }
 
 .modal {
-  max-width: 500px;
   background-color: rgb(219, 141, 141);
   margin: auto;
   transform: translate(-50%, -50%);
@@ -630,6 +650,8 @@ h2 {
   left: 50%;
   top: 50%;
   z-index: 10;
+  width: 85%;
+  max-width: 500px;
 }
 
 .overlay {

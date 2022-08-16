@@ -398,7 +398,6 @@ btnLogin.addEventListener('click', (e) => {
 
   currentAccount = accounts.find((el) => el.userName === loginFilter);
 
-
   // Validate Username
   if (inputLoginUsername.value === '' || inputLoginUsername.value === null) {
     errorMessage.innerHTML = 'Enter Username';
@@ -409,7 +408,6 @@ btnLogin.addEventListener('click', (e) => {
   } else {
     errorMessage.classList.remove('error-open');
   }
-
 
   // Validate Pin
   if (
@@ -549,9 +547,9 @@ closeAccount.addEventListener('click', (e) => {
 
       loginSection.style.display = 'grid';
       container.style.display = 'none';
-      overlay.style.display = 'none';
+      closeM();
+      inputClosePin.value = inputCloseUsername.value = '';
     }
-    // inputClosePin.value = inputCloseUsername.value = '';
   });
 });
 
