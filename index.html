@@ -37,22 +37,27 @@
   </head>
   <body class="">
     <div class="log-section">
-      <!-- <img src="img/logo.png" alt="Logo" srcset="" class="login-logo" /> -->
       <p class="logo">Gink</p>
 
       <form action="" class="log login hidden">
-        <input
-          type="text"
-          placeholder="user id"
-          class="log__input login__input--user"
-        />
+        <div class="login__username">
+          <input
+            type="text"
+            placeholder="user id"
+            class="log__input login__input--user"
+          />
+          <p class="error error-username"></p>
+        </div>
 
-        <input
-          type="password"
-          placeholder="pin"
-          maxlength="4"
-          class="log__input login__input--pin"
-        />
+        <div class="login__pin">
+          <input
+            type="password"
+            placeholder="pin"
+            maxlength="4"
+            class="log__input login__input--pin"
+          />
+          <p class="error error-pin"></p>
+        </div>
         <button class="log__btn login__btn">
           login
           <i class="fa-solid fa-arrow-right-long"></i>
@@ -60,47 +65,63 @@
       </form>
 
       <form action="" class="log signup">
-        <input
+        <div>
+           <input
           type="text"
           placeholder="firstname"
           class="log__input signup__input--user-firstname"
+          required
         />
-        <input
+        <p class="error error-firstname"></p>
+        </div>
+        <div>
+         <input
           type="text"
           placeholder="lastname"
           class="log__input signup__input--user-lastname"
+          required
         />
-        <input
+        <p class="error error-lastname"></p>
+       </div>
+
+        <div>
+         <input
           type="text"
           placeholder="user id"
           class="log__input signup__input--user"
+          required
         />
+        <p class="error error-username">Error</p>
+        </div>
 
-        <input
+        <div>
+          <input
           type="password"
           placeholder="pin"
           maxlength="4"
           class="log__input signup__input--pin"
+          required
         />
-
+          <p class="error error-password">Error</p>
+        </div>
+     
         <button class="log__btn signup__btn">
           Signup
           <i class="fa-solid fa-arrow-right-long"></i>
         </button>
       </form>
 
-      <!-- <p class="signup-login">have an account <button class="alternative">login</button></p> -->
     </div>
 
     <section class="container">
       <nav>
         <div class="logo__info">
-          <!-- <img src="img/logo.png" alt="Logo" class="logo" /> -->
           <p class="logo">Gink</p>
           <h2 class="welcome">Welcome</h2>
         </div>
 
         <div class="user__container">
+          <img src="" alt="Image of a person" class="user-img"></img>
 
           <div class="user__container--options">
             <button class="log-out">Log out</button>
@@ -159,22 +180,26 @@
             </div>
           </div>
 
-          <!-- OPERATION: LOAN -->
           <div class="operation operation--loan">
             <div class="operation--header operation--header-loan">
               <i class="fa-solid fa-money-check-dollar"></i>
               <h2>Request loan</h2>
             </div>
             <form class="form form--loan">
-              <input
-                type="number"
-                class="form__input form__input--loan-amount"
-                placeholder="Amount"
-              />
+              <div class="form--loan__container">
+                <input
+                  type="number"
+                  class="form__input form__input--loan-amount"
+                  placeholder="Enter Amount"
+                />
+                <p class="error error-loan"></p>
+              </div>
+
               <button class="form__btn form__btn--loan">
                 <i class="fa-solid fa-arrow-right-long"></i>
               </button>
             </form>
+            
           </div>
         </section>
 
