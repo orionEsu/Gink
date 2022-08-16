@@ -43,6 +43,7 @@ nav {
   font-family: "Rubik Burned", cursive;
   text-align: center;
   font-size: 2.5rem;
+  margin-bottom: 3rem;
 }
 .logo__info {
   display: flex;
@@ -50,11 +51,21 @@ nav {
   gap: 2rem;
 }
 
+.login {
+  margin-inline: auto;
+}
+.login > *:not(:last-child) {
+  margin-bottom: 2rem;
+}
+.login__username, .login__pin {
+  width: min(350px, 100%);
+}
+.login__input--user, .login__input--pin {
+  position: relative;
+}
+
 .log {
   text-align: center;
-}
-.log > * {
-  margin-top: 2rem;
 }
 .log-section {
   display: grid;
@@ -67,9 +78,10 @@ nav {
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
+  padding-inline: 3rem;
 }
 .log__input {
-  padding: 1rem 2rem;
+  padding: 1.4rem 2rem;
   font-size: 1.6rem;
   display: block;
   font-family: inherit;
@@ -77,10 +89,10 @@ nav {
   outline: none;
   border: none;
   font-family: "poppins", sans-serif;
-  width: min(300px, 100%);
   margin-inline: auto;
   background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
+  width: inherit;
 }
 .log__input:focus {
   outline: 2px solid rgba(255, 255, 255, 0.9);
@@ -107,8 +119,8 @@ nav {
   font-family: righteous, cursive;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
-  padding: 1rem 4rem;
-  width: min(200px, 100%);
+  padding: 1.4rem 4rem;
+  grid-column: span 2;
 }
 .log__btn i {
   margin-left: 0.5rem;
@@ -120,22 +132,27 @@ nav {
 
 .signup {
   display: grid;
-  grid-template-columns: -webkit-max-content -webkit-max-content;
-  grid-template-columns: max-content max-content;
-  grid-template-rows: repeat(3, 1fr);
-  justify-items: center;
+  grid-template-columns: 300px 300px;
   margin: auto;
-  -moz-column-gap: 3rem;
-       column-gap: 3rem;
+  gap: 3rem;
+  justify-items: center;
+  width: 100%;
+  justify-content: center;
+}
+@media (max-width: 700px) {
+  .signup {
+    grid-template-columns: 1fr;
+    width: min(300px, 100%);
+  }
+}
+.signup div {
+  width: inherit;
 }
 .signup-login {
   margin-top: 2rem;
   font-size: 1.5rem;
   text-align: center;
   color: #fff;
-}
-.signup__btn {
-  grid-column: span 2;
 }
 
 .alternative {
@@ -345,6 +362,9 @@ h2 {
 .form--loan {
   margin-top: 2rem;
 }
+.form--loan + * {
+  position: relative;
+}
 .form__label {
   font-size: 1.3rem;
   text-align: center;
@@ -357,7 +377,7 @@ h2 {
   border: none;
   font-family: inherit;
   font-size: 1.6rem;
-  outline: none;
+  outline: 2px solid transparent;
   color: #333;
   padding: 1.25rem 2rem;
   border-radius: 0.7rem;
@@ -384,21 +404,27 @@ h2 {
 .form__input:focus {
   outline: 2px solid rgba(255, 255, 255, 0.9);
 }
+.form__input--loan-amount, .form__input--amount, .form__input--transfer {
+  position: relative;
+}
 .form__btn {
   border: none;
   border-radius: 0.7rem;
   font-size: 1.8rem;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  outline: 2px solid transparent;
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: all 0.3s;
 }
 .form__btn:focus {
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.8);
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 .form__btn--close {
   padding: 1rem;
+}
+.form--close input {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .logout-timer {
@@ -570,9 +596,9 @@ h2 {
   position: absolute;
   top: 1.2rem;
   right: 2rem;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-family: 900;
-  color: #333;
+  color: #fff;
   cursor: pointer;
   border: none;
   background: none;
@@ -608,4 +634,21 @@ input[type=number] {
 
 .fa-arrow-right-long {
   color: #fff;
+}
+
+.error {
+  position: absolute;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+.error-loan, .error-message {
+  color: #fff;
+}
+
+.error-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
 }/*# sourceMappingURL=main.css.map */

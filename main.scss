@@ -31,27 +31,41 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding-top: 4rem;
-  // padding-inline: 3rem;
 }
 
 .welcome {
   font-size: 3rem;
-  // font-family: 'Cabin Sketch', cursive;
   font-family: 'poppins', sans-serif;
 }
 
 .logo {
-  // height: 5.25rem;
-  // width: auto;
-  // margin: auto;
   font-family: 'Rubik Burned', cursive;
   text-align: center;
   font-size: 2.5rem;
+  margin-bottom: 3rem;
 
   &__info {
     display: flex;
     align-items: center;
     gap: 2rem;
+  }
+}
+
+.login {
+  margin-inline: auto;
+
+  & > *:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__username,
+  &__pin{
+    width: min(350px, 100%);
+  }
+
+  &__input--user,
+  &__input--pin {
+    position: relative;
   }
 }
 
@@ -61,10 +75,6 @@ nav {
 
 .log {
   text-align: center;
-
-  & > * {
-    margin-top: 2rem;
-  }
 
   &-section {
     display: grid;
@@ -77,22 +87,22 @@ nav {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
+    padding-inline: 3rem;
   }
 
   &__input {
-    padding: 1rem 2rem;
+    padding: 1.4rem 2rem;
     font-size: 1.6rem;
     display: block;
     font-family: inherit;
     border-radius: 0.5rem;
-    // border: 2px solid #ccc;
     outline: none;
     border: none;
     font-family: 'poppins', sans-serif;
-    width: min(300px, 100%);
     margin-inline: auto;
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
+    width: inherit;
 
     &:focus {
       outline: 2px solid rgba(255, 255, 255, 0.9);
@@ -106,7 +116,6 @@ nav {
 
   &__btn {
     border: none;
-    // background: #fff;
     background-color: rgba(255, 255, 255, 0.1);
     font-size: 1.8rem;
     color: inherit;
@@ -115,18 +124,12 @@ nav {
     font-family: righteous, cursive;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     border-radius: 0.5rem;
-    padding: 1rem 4rem;
-    width: min(200px, 100%);
+    padding: 1.4rem 4rem;
+    grid-column: span 2;
 
     i {
       margin-left: 0.5rem;
     }
-
-    // &:hover,
-    // &:focus {
-    //   outline: none;
-    //   color: #777;
-    // }
   }
 
   &-logo {
@@ -137,21 +140,27 @@ nav {
 
 .signup {
   display: grid;
-  grid-template-columns: max-content max-content;
-  grid-template-rows: repeat(3, 1fr);
-  justify-items: center;
+  grid-template-columns: 300px 300px;
   margin: auto;
-  column-gap: 3rem;
+  gap: 3rem;
+  justify-items: center;
+  width: 100%;
+  justify-content: center;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    width: min(300px, 100%);
+  }
+
+  div {
+    width: inherit;
+  }
 
   &-login {
     margin-top: 2rem;
     font-size: 1.5rem;
     text-align: center;
     color: #fff;
-  }
-
-  &__btn{
-    grid-column: span 2;
   }
 }
 .alternative {
@@ -207,10 +216,8 @@ nav {
 
 .movements {
   grid-row: 2 / span 3;
-  // background-color: #fff;
   border-radius: 1rem;
   overflow: auto;
-  // height: 35rem;
   height: 30rem;
   padding: 0 1rem;
   color: #fff;
@@ -228,18 +235,15 @@ nav {
     font-size: 1.1rem;
     text-transform: uppercase;
     font-weight: 500;
-    // color: #fff;
     padding: 0.1rem 1rem;
     border-radius: 5px;
     margin-right: auto;
 
     &--deposit {
-      // background-image: linear-gradient(to top left, #39b385, #9be15d);
       background-color: #34a853;
     }
 
     &--withdrawal {
-      // background-image: linear-gradient(to top left, #e52a5a, #ff585f);
       background-color: rgba(#fd0404, 0.6);
     }
   }
@@ -248,7 +252,6 @@ nav {
     font-size: 1.1rem;
     text-transform: uppercase;
     font-weight: 500;
-    // color: #666;
     color: #fff;
     margin-inline: auto;
   }
@@ -340,8 +343,6 @@ nav {
   &--loan {
     background-color: #fff;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-    // background-image: linear-gradient(to right, #e96443, #904a95);
-    // position: fixed;
 
     @media (max-width: 1000px) {
       width: min(400px, 100%);
@@ -392,6 +393,10 @@ h2 {
 
   &--loan {
     margin-top: 2rem;
+
+    & + * {
+      position: relative;
+    }
   }
 
   &__label {
@@ -408,8 +413,7 @@ h2 {
     border: none;
     font-family: inherit;
     font-size: 1.6rem;
-    // border: 1px solid rgba(0, 0, 0, 0.3);
-    outline: none;
+    outline: 2px solid transparent;
     color: #333;
     padding: 1.25rem 2rem;
     border-radius: 0.7rem;
@@ -427,26 +431,34 @@ h2 {
     &:focus {
       outline: 2px solid rgba(255, 255, 255, 0.9);
     }
+
+    &--loan-amount,
+    &--amount,
+    &--transfer {
+      position: relative;
+    }
   }
 
   &__btn {
     border: none;
     border-radius: 0.7rem;
     font-size: 1.8rem;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    // background-color: #fff;
+    outline: 2px solid transparent;
     background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: all 0.3s;
 
     &:focus {
-      outline: none;
-      background-color: rgba(255, 255, 255, 0.8);
+      outline: 2px solid rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.15);
     }
 
     &--close {
       padding: 1rem;
     }
+  }
+  &--close input {
+    background-color: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -481,7 +493,6 @@ h2 {
     }
 
     &--card {
-      // background-color: #fff;
       border-radius: 20px;
       box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
       max-width: 380px;
@@ -636,9 +647,9 @@ h2 {
   position: absolute;
   top: 1.2rem;
   right: 2rem;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-family: 900;
-  color: #333;
+  color: #fff;
   cursor: pointer;
   border: none;
   background: none;
@@ -668,7 +679,6 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-// .account__det--card,
 .operation--loan,
 .transaction {
   background-color: rgba(255, 255, 255, 0.1);
@@ -678,19 +688,21 @@ input[type='number'] {
   color: #fff;
 }
 
-// ::-webkit-scrollbar {
-//   width: 8px;
-// }
-// ::-webkit-scrollbar-thumb {
-//   // background: #de3163;
-//   // background-color: rgba(255,255,255, .1);
-//   background-color: rgba(0,0,0,.5);
-//   border-radius: 10px;
-// }
-// ::-webkit-scrollbar-track {
-//   background: #f8f8f8;
-// }
+.error {
+  position: absolute;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
 
-// font-family: 'Rubik Burned', cursive;
+  &-loan,
+  &-message {
+    color: #fff;
+  }
+}
 
-// font-family: 'Rubik Marker Hatch', cursive;
+.error-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}

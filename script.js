@@ -2,7 +2,6 @@
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-// BANKIST APP
 
 // Data
 const account1 = {
@@ -283,17 +282,9 @@ const transactionBeneficiaries = function () {
       document.querySelector('.modal').insertAdjacentHTML('afterbegin', html);
       closeEvent();
 
-      // const inputTransferTo = el.innerText
-      //   .toLowerCase()
-      //   .split(' ')
-      //   .map((el) => el[0])
-      //   .join('');
-
       const inputTransferAmount = document.querySelector(
         '.form__input--amount'
       );
-
-      // const fil = filterBeneficiaries.find(el=> el.owner === e.ta)
 
       const btnTransfer = document.querySelector('.form__btn--transfer');
       btnTransfer.addEventListener('click', (e) => {
