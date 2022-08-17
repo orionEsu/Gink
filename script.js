@@ -176,7 +176,7 @@ const displayMovements = function (acc, sort = false) {
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${transactionType}">
-        ${i + 1} ${transactionType}
+        ${transactionType}
       </div>
         <div class="movements__date">${displayDate}</div>
         <div class="movements__value">${formatted}</div>
@@ -657,7 +657,11 @@ btnSignup.addEventListener('click', (e) => {
         }`;
         labelName.textContent = `${currentAccount.owner}`;
         loginSection.style.display = 'none';
-        inputLoginPin.value = inputLoginUsername.value = '';
+        inputSignupUsername.value =
+          inputSignupPin.value =
+          inputSignupFirstName.value =
+          inputSignupLastName.value =
+            '';
         container.style.display = 'block';
 
         const date = new Date();

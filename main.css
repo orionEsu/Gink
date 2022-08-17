@@ -3,7 +3,7 @@
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
@@ -115,15 +115,15 @@ nav {
 }
 .log__input::-moz-placeholder {
   font-family: "poppins", sans-serif;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
 }
 .log__input:-ms-input-placeholder {
   font-family: "poppins", sans-serif;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
 }
 .log__input::placeholder {
   font-family: "poppins", sans-serif;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
 }
 .log__btn {
   border: none;
@@ -542,6 +542,10 @@ h2 {
   background: none;
   color: #999;
 }
+.beneficiary:hover .beneficiary__img {
+  transform: scale(1.1);
+  filter: opacity(0.9);
+}
 .beneficiary p {
   margin-top: 1rem;
   font-family: "Poppins", sans-serif;
@@ -552,10 +556,15 @@ h2 {
 .beneficiary__img {
   width: 100px;
   border-radius: 20px;
+  transition: all ease 0.2s;
 }
 
 .user__container {
   cursor: pointer;
+}
+.user__container .fa-solid {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 .user__container:hover .user__container--options, .user__container:focus .user__container--options, .user__container:focus-within .user__container--options {
   opacity: 1;
@@ -672,4 +681,38 @@ input[type=number] {
   transform: translateY(0);
   opacity: 1;
   visibility: visible;
+}
+
+@media (max-width: 420px) {
+  .account__det--card,
+.operation--loan,
+.transaction {
+    width: min(350px, 100%);
+    margin-right: auto;
+    margin-left: 0rem;
+  }
+  .transaction {
+    padding-inline: 3rem;
+  }
+  .transaction__beneficiaries {
+    gap: 3rem;
+  }
+  .movements__top__header {
+    font-size: 1.8rem;
+    font-family: "poppins", sans-serif;
+  }
+  .account__info {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
+}
+@media (max-width: 400px) {
+  .account__det--card,
+.operation--loan,
+.transaction {
+    width: min(320px, 100%);
+    margin-right: auto;
+    margin-left: 0rem;
+  }
 }/*# sourceMappingURL=main.css.map */

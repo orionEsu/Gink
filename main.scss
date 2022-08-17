@@ -3,7 +3,7 @@
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
@@ -127,7 +127,7 @@ nav {
 
     &::placeholder {
       font-family: 'poppins', sans-serif;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.7);
     }
   }
 
@@ -585,6 +585,11 @@ h2 {
   background: none;
   color: #999;
 
+  &:hover &__img {
+    transform: scale(1.1);
+    filter: opacity((0.9));
+  }
+
   p {
     margin-top: 1rem;
     font-family: 'Poppins', sans-serif;
@@ -596,12 +601,18 @@ h2 {
   &__img {
     width: 100px;
     border-radius: 20px;
+    transition: all ease 0.2s;
   }
 }
 
 .user {
   &__container {
     cursor: pointer;
+
+    .fa-solid {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
 
     &:hover &--options,
     &:focus &--options,
@@ -727,4 +738,43 @@ input[type='number'] {
   transform: translateY(0);
   opacity: 1;
   visibility: visible;
+}
+
+@media (max-width: 420px) {
+  .account__det--card,
+  .operation--loan,
+  .transaction {
+    width: min(350px, 100%);
+    margin-right: auto;
+    margin-left: 0rem;
+  }
+
+  .transaction {
+    padding-inline: 3rem;
+
+    &__beneficiaries {
+      gap: 3rem;
+    }
+  }
+
+  .movements__top__header {
+    font-size: 1.8rem;
+    font-family: 'poppins', sans-serif;
+  }
+
+  .account__info {
+    display: flex;
+    justify-content: space-between;
+    width: min(90%, 100%);
+  }
+}
+
+@media (max-width: 400px) {
+  .account__det--card,
+  .operation--loan,
+  .transaction {
+    width: min(320px, 100%);
+    margin-right: auto;
+    margin-left: 0rem;
+  }
 }
