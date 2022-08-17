@@ -393,7 +393,7 @@ let currentAccount;
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   const loginFilter = inputLoginUsername.value.toLowerCase();
-  const errorMessage = document.querySelector('.error-username');
+  const errorMessage = document.querySelector('.error-login');
   const errorPin = document.querySelector('.error-pin');
 
   currentAccount = accounts.find((el) => el.userName === loginFilter);
@@ -563,6 +563,7 @@ btnSignup.addEventListener('click', (e) => {
   const errorPassword = document.querySelector('.error-password');
   const error = document.querySelector('.error');
 
+  console.log(errorUserName);
   // First Name
   if (
     inputSignupFirstName.value === '' ||

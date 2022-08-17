@@ -115,15 +115,15 @@ nav {
 }
 .log__input::-moz-placeholder {
   font-family: "poppins", sans-serif;
-  color: #bbb;
+  color: rgba(255, 255, 255, 0.3);
 }
 .log__input:-ms-input-placeholder {
   font-family: "poppins", sans-serif;
-  color: #bbb;
+  color: rgba(255, 255, 255, 0.3);
 }
 .log__input::placeholder {
   font-family: "poppins", sans-serif;
-  color: #bbb;
+  color: rgba(255, 255, 255, 0.3);
 }
 .log__btn {
   border: none;
