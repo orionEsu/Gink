@@ -484,7 +484,7 @@ btnLoan.addEventListener('click', (e) => {
     errorMessage.classList.add('error-open');
   } else if (
     loanAmount > 0 &&
-    currentAccount.movements.some((el) => el > el * (10 / 100))
+    currentAccount.movements.some((el) => el >= loanAmount / 10)
   ) {
     currentAccount.movements.push(loanAmount);
     currentAccount.movementsDates.push(date);
@@ -492,6 +492,9 @@ btnLoan.addEventListener('click', (e) => {
     calcBalance(currentAccount);
     calcSummary(currentAccount);
     errorMessage.classList.remove('error-open');
+  }else{
+    errorMessage.innerHTML = 'Amount Too Large';
+    errorMessage.classList.add('error-open');
   }
 
   inputLoanAmount.value = '';
