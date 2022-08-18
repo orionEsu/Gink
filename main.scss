@@ -297,7 +297,7 @@ nav {
     margin-bottom: 2rem;
     column-gap: 4rem;
     flex-wrap: wrap;
-    row-gap: 1rem;
+    row-gap: 2rem;
 
     &__header {
       font-size: 2rem;
@@ -803,6 +803,7 @@ select::-ms-expand {
   display: none;
 }
 .select {
+  margin-left: auto;
   position: relative;
   display: flex;
   width: min(150px, 100%);
