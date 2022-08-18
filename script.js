@@ -103,7 +103,7 @@ const modalContainer = document.querySelector('.operation');
 
 const btnLogin = document.querySelector('.login__btn');
 const btnLoan = document.querySelector('.form__btn--loan');
-const btnSort = document.querySelector('.btn--sort');
+// const btnSort = document.querySelector('.btn--sort');
 const btnSignup = document.querySelector('.signup__btn');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
@@ -125,6 +125,10 @@ const modal = document.querySelector('.modal');
 const loginSection = document.querySelector('.log-section');
 const overlay = document.querySelector('.overlay');
 const userImg = document.querySelector('.user-img');
+
+let unfilteredArray;
+let deposit;
+let withdrawal;
 
 ///////////////////////////////////////
 
@@ -164,14 +168,35 @@ const dateFormat = function (date, locale) {
 // Display Movements
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = ' ';
+
   const sortMovs = sort
     ? acc.movements.slice().sort((a, b) => a - b)
     : acc.movements;
+
+  // const sortMovs = acc.movements;
+
   sortMovs.forEach((el, i) => {
     const transactionType = el > 0 ? 'deposit' : 'withdrawal';
     const formatted = curFormat(el, acc.locale, acc.currency);
     const date = new Date(acc.movementsDates[i]);
     const displayDate = dateFormat(date, acc.locale);
+
+    // console.log(acc.movements.filter(el => el > 0));
+
+    // if (transactionType === 'deposit') {
+    //   // const html = `
+    //   // <div class="movements__row">
+    //   //   <div class="movements__type movements__type--${transactionType}">
+    //   //   ${transactionType}
+    //   // </div>
+    //   //   <div class="movements__date">${displayDate}</div>
+    //   //   <div class="movements__value">${formatted}</div>
+    //   // </div>`;
+
+    //   // containerMovements.insertAdjacentHTML('afterbegin', html);
+    // } else {
+    //   // const withdrawal = document.createElement('div');
+    // }
 
     const html = `
       <div class="movements__row">
@@ -365,19 +390,39 @@ const closeEvent = function () {
 };
 
 // Sort Account
-let sorted = false;
-const sort = function () {
-  btnSort.addEventListener('click', (e) => {
-    e.preventDefault();
-    displayMovements(currentAccount, !sorted);
-    sorted = !sorted;
-  });
-};
+// let sorted = false;
+// const sort = function () {
+//   btnSort.addEventListener('click', (e) => {
+//     console.log(btnSort);
+//     e.preventDefault();
+//     displayMovements(currentAccount, !sorted);
+//     sorted = !sorted;
+//   });
+// };
 
 // Open Modal
 const openM = function () {
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
+};
+
+const sort = function (acc) {
+  unfilteredArray = [...acc.movements];
+  deposit = [...acc.movements];
+  withdrawal = [...acc.movements];
+
+  document.querySelector('#sort').addEventListener('input', (e) => {
+    if (e.target.value === 'Deposit') {
+      acc.movements = [...deposit.filter((el) => el > 0)];
+      displayMovements(acc);
+    } else if (e.target.value === 'Withdrawal') {
+      acc.movements = [...withdrawal.filter((el) => el < 0)];
+      displayMovements(acc);
+    } else if (e.target.value === 'All') {
+      acc.movements = [...unfilteredArray];
+      displayMovements(acc);
+    }
+  });
 };
 
 // Generate Profile image for current user
@@ -455,7 +500,7 @@ btnLogin.addEventListener('click', (e) => {
   calcBalance(currentAccount);
   calcSummary(currentAccount);
   profileImg(currentAccount);
-  sort();
+  sort(currentAccount);
 });
 
 // Logout functionality
@@ -492,7 +537,7 @@ btnLoan.addEventListener('click', (e) => {
     calcBalance(currentAccount);
     calcSummary(currentAccount);
     errorMessage.classList.remove('error-open');
-  }else{
+  } else {
     errorMessage.innerHTML = 'Amount Too Large';
     errorMessage.classList.add('error-open');
   }
@@ -681,7 +726,7 @@ btnSignup.addEventListener('click', (e) => {
         displayMovements(currentAccount);
         calcBalance(currentAccount);
         calcSummary(currentAccount);
-        sort();
+        sort(currentAccount);
         profileImg(currentAccount);
       }
     }
