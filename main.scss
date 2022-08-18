@@ -34,7 +34,7 @@ nav {
 }
 
 .welcome {
-  font-size: 3rem;
+  font-size: clamp(2.3rem, 4vw, 3rem);
   font-family: 'poppins', sans-serif;
 }
 
@@ -229,7 +229,7 @@ nav {
 
   &__value {
     margin: 0.7rem 0;
-    font-size: 4.5rem;
+    font-size: clamp(4rem, 7vw, 4.5rem);
     font-weight: 700;
   }
 }
@@ -295,9 +295,12 @@ nav {
     justify-content: space-between;
     margin-top: 3rem;
     margin-bottom: 2rem;
+    column-gap: 4rem;
+    flex-wrap: wrap;
+    row-gap: 1rem;
 
     &__header {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 600;
       color: #fff;
     }
@@ -586,8 +589,8 @@ h2 {
   color: #999;
 
   &:hover &__img {
-    transform: scale(1.1);
-    filter: opacity((0.9));
+    transform: scale(1.08);
+    filter: opacity((0.7));
   }
 
   p {
@@ -696,11 +699,11 @@ h2 {
   width: 25px;
 }
 
-@media (max-width: 600px) {
-  .beneficiary__img {
-    width: 75px !important;
-  }
-}
+// @media (max-width: 600px) {
+//   .beneficiary__img {
+//     width: 75px !important;
+//   }
+// }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -777,4 +780,49 @@ input[type='number'] {
     margin-right: auto;
     margin-left: 0rem;
   }
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: rgba(255, 255, 255, 0.1);
+  background-image: none;
+  flex: 1;
+  padding: 0 0.5em;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-family: 'righteous', cursive;
+}
+select::-ms-expand {
+  display: none;
+}
+.select {
+  position: relative;
+  display: flex;
+  width: min(150px, 100%);
+  height: 3em;
+  line-height: 3;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  border-radius: 0.25em;
+}
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #2b2e2e;
+  cursor: pointer;
+  pointer-events: none;
+  transition: 0.25s all ease;
+}
+.select:hover::after {
+  // color: #23b499;
 }
