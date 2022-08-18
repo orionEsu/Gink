@@ -206,7 +206,7 @@
 
         <section class="transaction">
           <div class="transaction__header">
-            <p class="transaction__heading">Transfer funds to</p>
+            <p class="transaction__heading">Transfer funds to &DownTeeArrow;</p>
 
             <div class="transaction__beneficiaries"></div>
           </div>
@@ -215,7 +215,16 @@
             <h3 class="heading-3 movements__top__header">
               Recent Transactions
             </h3>
-            <button class="btn--sort">SORT &downarrow;</button>
+
+            <div class="select">
+              <select name="Sort" id="sort">
+                 <option selected disabled>Sort By : </option>
+                 <option value="Deposit">Deposit</option>
+                 <option value="Withdrawal">withdrawal</option>
+                 <option value="All">All</option>
+              </select>
+            </div>
+            <!-- <button class="btn--sort">SORT &downarrow;</button> -->
           </div>
           <div class="movements">
             <div class="movements__header">
@@ -240,6 +249,8 @@
               </div>
             </div>
           </div>
+
+         
         </section>
       </main>
     </section>
