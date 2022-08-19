@@ -64,6 +64,9 @@ nav {
     gap: 0;
   }
 }
+.logo-login {
+  font-size: 3.5rem;
+}
 
 .login {
   margin-inline: auto;
@@ -96,6 +99,7 @@ nav {
   background-size: cover;
   width: 100%;
   padding-inline: 3rem;
+  overflow: hidden;
 }
 .log__input {
   padding: 1.4rem 2rem;
@@ -173,6 +177,9 @@ nav {
   font-size: 1.5rem;
   text-align: center;
   color: #fff;
+}
+.signup__btn {
+  opacity: 0;
 }
 
 .alternative {
