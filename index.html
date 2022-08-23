@@ -10,7 +10,10 @@
       src="https://kit.fontawesome.com/39bda44580.js"
       crossorigin="anonymous"
     ></script>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="gsap.js" defer></script>
+    <script src="script.js" defer></script>
 
 
     <link
@@ -38,10 +41,10 @@
     <title>Gink</title>
   </head>
   <body class="">
-    <div class="log-section">
+    <div class="log-section" id="log-section">
       <p class="logo logo-login">Gink</p>
 
-      <form action="" class="log login hidden">
+      <form action="" class="log login hidden" id="login">
         <div class="login__username">
           <input
             type="text"
@@ -66,7 +69,7 @@
         </button>
       </form>
 
-      <form action="" class="log signup">
+      <form action="" class="log signup" id="signup">
         <div>
            <input
           type="text"
@@ -115,7 +118,7 @@
 
     </div>
 
-    <section class="container">
+    <section class="container" id="main">
       <nav>
         <div class="logo__info">
           <p class="logo logo__header">Gink</p>
@@ -260,10 +263,7 @@
     <div class="modal operation operation--loan hidden"></div>
     <div class="overlay hidden"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-
-    <script src="script.js"></script>
-    <script src="gsap.js"></script>
+    
 
   </body>
 </html>
