@@ -431,6 +431,47 @@ const profileImg = function (acc) {
   userImg.src = `img/img-${acc.ownerNo}.jpg`;
 };
 ///////////////////////////////////////////
+const signupTl = gsap.timeline({ default: { duration: 1 } });
+
+signupTl
+  .from(
+    '.logo-login',
+    {
+      opacity: 0,
+      scale: 0,
+      ease: 'back',
+    }
+    // 0.4
+  )
+  .from(
+    '.log__input',
+    {
+      duration: 0.5,
+      y: 50,
+      rotate: 5,
+      stagger: 0.4,
+      opacity: 0,
+      ease: 'circ.out',
+    },
+    '<.2'
+  )
+  .fromTo(
+    '.log__btn',
+    {
+      y: 20,
+    },
+    {
+      duration: 0.01,
+      ease: 'rough',
+      y: 0,
+      opacity: 1,
+    },
+    '>'
+  );
+
+const bodyTimeline = gsap.timeline({ defaults: { duration: 1, opacity: 0 } });
+
+///////////////////////////////////////////
 // Event Handlers
 
 // Login functionality
@@ -501,6 +542,7 @@ btnLogin.addEventListener('click', (e) => {
   calcSummary(currentAccount);
   profileImg(currentAccount);
   sort(currentAccount);
+  bodyTimeline.restart();
 });
 
 // Logout functionality
@@ -512,6 +554,7 @@ btnLogOut.addEventListener('click', (e) => {
   container.style.display = 'none';
 
   currentAccount = {};
+  signupTl.restart();
 });
 
 // loan Functionality
@@ -594,9 +637,14 @@ closeAccount.addEventListener('click', (e) => {
       );
 
       loginSection.style.display = 'grid';
+      document.querySelector('#login').style.display = 'none';
+      document.querySelector('#signup').style.display = 'none';
       container.style.display = 'none';
       closeM();
       inputClosePin.value = inputCloseUsername.value = '';
+
+      currentAccount = {};
+      signupTl.restart();
     }
   });
 });
@@ -728,6 +776,112 @@ btnSignup.addEventListener('click', (e) => {
         calcSummary(currentAccount);
         sort(currentAccount);
         profileImg(currentAccount);
+        // animate();
+        bodyTimeline
+          .from(
+            '.logo__header',
+            {
+              scale: 0,
+              ease: 'elastic',
+            },
+            0
+          )
+          .from(
+            '.welcome',
+            {
+              x: -30,
+              ease: 'power3',
+            },
+            '>'
+          )
+          .from(
+            '.user__container',
+            {
+              duration: 0.4,
+              scale: 0,
+              ease: 'circ.out',
+            },
+            '<.5'
+          )
+          .from(
+            '.balance__label',
+            {
+              x: -30,
+              duration: 0.7,
+              ease: 'power4',
+            },
+            '<.8'
+          )
+          .from('.balance__value', {
+            duration: 0.4,
+            x: 15,
+            ease: 'sine',
+          })
+          .from(
+            '.balance__date',
+            {
+              y: 25,
+              duration: 0.7,
+              ease: 'sine',
+            },
+            '>'
+          )
+          .from('.account__det--card', {
+            y: 30,
+            ease: 'bounce',
+          })
+          .from('.account__info--label', {
+            ease: 'circ',
+            duration: 0.3,
+            scale: 0,
+            stagger: 0.5,
+          })
+          .from('.operation--loan', {
+            y: 20,
+            duration: 0.4,
+          })
+          .from('.transaction', {
+            x: 50,
+            ease: 'back',
+          })
+          .from(
+            '.transaction__heading',
+            {
+              x: -30,
+              ease: 'power4',
+              duration: 0.6,
+            },
+            '<.7'
+          )
+          .from('.beneficiary', {
+            x: 25,
+            duration: 0.4,
+            ease: 'sine',
+            stagger: 0.3,
+          })
+          .from(
+            '.movements__top__header',
+            {
+              x: -25,
+              ease: 'circ',
+              duration: 0.4,
+            },
+            '>'
+          )
+          .from(
+            '.select',
+            {
+              x: 25,
+              ease: 'circ',
+              duration: 0.4,
+            },
+            '<.3'
+          )
+          .from('.movements', {
+            y: 30,
+            duration: 0.5,
+            ease: 'circ.out',
+          });
       }
     }
   }
