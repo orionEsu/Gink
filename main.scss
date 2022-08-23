@@ -63,8 +63,8 @@ nav {
     }
   }
 
-  &-login{
-    font-size: 3.5rem;
+  &-login {
+    font-size: 3rem;
   }
 }
 
@@ -148,6 +148,7 @@ nav {
     border-radius: 0.5rem;
     padding: 1.4rem 4rem;
     grid-column: span 2;
+    opacity: 0;
 
     i {
       margin-left: 0.5rem;
@@ -511,7 +512,10 @@ h2 {
   transition: all 0.3s ease;
   transition-delay: 0.03s;
   padding-inline: 3rem;
+  // height: 100vh;
   background-color: #000;
+  // max-height: 100%;
+  height: fit-content;
 }
 
 .account {
@@ -629,6 +633,7 @@ h2 {
 
     &:hover &--options,
     &:focus &--options,
+    &:active &--options,
     &:focus-within &--options {
       opacity: 1;
       visibility: visible;
@@ -645,6 +650,7 @@ h2 {
       opacity: 0;
       visibility: hidden;
       transform: translateY(10px);
+      width: max-content;
 
       & > * {
         display: block;
@@ -833,7 +839,4 @@ select::-ms-expand {
   cursor: pointer;
   pointer-events: none;
   transition: 0.25s all ease;
-}
-.select:hover::after {
-  // color: #23b499;
 }
