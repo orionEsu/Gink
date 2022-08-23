@@ -65,7 +65,7 @@ nav {
   }
 }
 .logo-login {
-  font-size: 3.5rem;
+  font-size: 3rem;
 }
 
 .login {
@@ -142,6 +142,7 @@ nav {
   border-radius: 0.5rem;
   padding: 1.4rem 4rem;
   grid-column: span 2;
+  opacity: 0;
 }
 .log__btn i {
   margin-left: 0.5rem;
@@ -475,6 +476,9 @@ h2 {
   transition-delay: 0.03s;
   padding-inline: 3rem;
   background-color: #000;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .account__det {
@@ -578,7 +582,7 @@ h2 {
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.8);
 }
-.user__container:hover .user__container--options, .user__container:focus .user__container--options, .user__container:focus-within .user__container--options {
+.user__container:hover .user__container--options, .user__container:focus .user__container--options, .user__container:active .user__container--options, .user__container:focus-within .user__container--options {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -593,6 +597,9 @@ h2 {
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 .user__container--options > * {
   display: block;
