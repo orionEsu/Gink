@@ -66,7 +66,6 @@ Live Site URL: [Gink](https://gink.netlify.app)
 </br>
 
 ## **Technologies Used** :
----
 - HTML
 - CSS
 - JavaScript
@@ -75,5 +74,4 @@ Live Site URL: [Gink](https://gink.netlify.app)
 
 
 ## **Credit**: 
----
 Images Sourced from [Unsplash](www.unsplash.com)
