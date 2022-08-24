@@ -1,4 +1,4 @@
-b# **Gink** 🏦:
+# **Gink** 🏦:
 Gink is a mini banking application built with JavaScript.
 
 ![Pictorial Description of Gink](./img/view.png)
