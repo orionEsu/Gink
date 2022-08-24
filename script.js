@@ -131,8 +131,8 @@ let deposit;
 let withdrawal;
 
 ///////////////////////////////////////
-
 // Functions
+
 const createUsername = (accs) => {
   accs.forEach((el) => {
     el.userName = el.owner
@@ -390,6 +390,7 @@ const closeEvent = function () {
 };
 
 // Sort Account
+
 // let sorted = false;
 // const sort = function () {
 //   btnSort.addEventListener('click', (e) => {
@@ -401,6 +402,7 @@ const closeEvent = function () {
 // };
 
 // Open Modal
+
 const openM = function () {
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
@@ -430,7 +432,10 @@ const profileImg = function (acc) {
   const userImg = document.querySelector('.user-img');
   userImg.src = `img/img-${acc.ownerNo}.jpg`;
 };
+
 ///////////////////////////////////////////
+
+// Animations
 const signupTl = gsap.timeline({ default: { duration: 1 } });
 
 signupTl
