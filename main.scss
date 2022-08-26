@@ -26,7 +26,7 @@ img {
   width: 100%;
 }
 
-nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -512,6 +512,7 @@ h2 {
   transition: all 0.3s ease;
   transition-delay: 0.03s;
   padding-inline: 3rem;
+  overflow-x: hidden;
   // height: 100vh;
   background-color: #000;
   // max-height: 100%;
@@ -621,10 +622,41 @@ h2 {
     transition: all ease 0.2s;
   }
 }
+.user__container--options {
+  background-color: #000;
+  position: absolute;
+  right: -17px;
+  box-shadow: 0.5px 0.5px 4px rgba(0, 0, 0, 0.3);
+  /*! opacity: 0; */
+  /*! visibility: hidden; */
+  /*! transform: translateY(10px); */
+  width: -webkit-max-content;
+  width: -moz-max-content;
+}
+
+// .user__container {
+//   cursor: pointer;
+//   position: relative;
+//   transform: translateY(-67px);
+// }
+
+// .user__container--options > * {
+//   display: block;
+//   background-color: #c4c4c4;
+//   border: none;
+//   padding: 1rem;
+//   cursor: pointer;
+//   width: 100%;
+//   text-align: left;
+//   font-family: 'Poppins', sans-serif;
+//   border: 1px solid #444;
+// }
 
 .user {
   &__container {
     cursor: pointer;
+    position: relative;
+    margin-top: -3rem;
 
     .fa-solid {
       font-size: 1.5rem;
@@ -642,25 +674,31 @@ h2 {
     }
 
     &--options {
-      background-color: rgba(255, 255, 255, 0.3);
+      background-color: #000;
       position: absolute;
-      z-index: 100;
-      right: 7px;
+      right: -17px;
       box-shadow: 0.5px 0.5px 4px rgb(0, 0, 0, 0.3);
       opacity: 0;
       visibility: hidden;
       transform: translateY(10px);
-      width: max-content;
+      width: fit-content;
+      display: grid;
+      grid-template-columns: 50px 80px;
 
       & > * {
         display: block;
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: #c4c4c4;
         border: none;
         padding: 1rem;
         cursor: pointer;
+        border: 1px solid #444;
         width: 100%;
         text-align: left;
         font-family: 'Poppins', sans-serif;
+
+        &:hover {
+          background-color: #afaeae;
+        }
       }
     }
   }
@@ -668,7 +706,6 @@ h2 {
   &-img {
     width: 40px;
     border-radius: 13px;
-    position: relative;
   }
 }
 
@@ -817,6 +854,9 @@ select {
 }
 select::-ms-expand {
   display: none;
+}
+select option {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .select {
   margin-left: auto;
