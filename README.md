@@ -30,7 +30,7 @@ Live Site URL: [Gink](https://gink.netlify.app)
 
 > If a new user transfers funds into an existing user account, the new user can log out of their account and log into exisiting users account to confirm if the funds were recieved via:
 >
-> ### **Santiago Jimenez** </br>
+> #### **Santiago Jimenez** </br>
 >
 > <img src="./img/img-1.jpg" width="180" height="auto"> </br>
 >
@@ -39,7 +39,7 @@ Live Site URL: [Gink](https://gink.netlify.app)
 >
 > ---
 >
-> ### **Charlotte Gin** </br>
+> #### **Charlotte Gin** </br>
 >
 > <img src="./img/img-2.jpg" width="180" height="auto"> </br>
 >
@@ -48,7 +48,7 @@ Live Site URL: [Gink](https://gink.netlify.app)
 >
 > ---
 >
-> ### **Sofía Mercedes** </br>
+> #### **Sofía Mercedes** </br>
 >
 > <img src="./img/img-3.jpg" width="180" height="auto"> </br>
 >
@@ -57,7 +57,7 @@ Live Site URL: [Gink](https://gink.netlify.app)
 >
 > ---
 >
-> ### **María Mateo** </br>
+> #### **María Mateo** </br>
 >
 > <img src="./img/img-4.jpg" width="180" height="auto"> </br>
 >
