@@ -277,7 +277,6 @@ const transactionBeneficiaries = function () {
   benefi.forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log(el);
       openM();
       document.querySelector('.modal').innerHTML = '';
       document.querySelector('.modal').classList.add('operation--loan');
@@ -343,6 +342,7 @@ const transactionBeneficiaries = function () {
           displayMovements(currentAccount);
           calcBalance(currentAccount);
           calcSummary(currentAccount);
+          sort(currentAccount);
           errorMessage.classList.remove('error-open');
           closeM();
         }
@@ -377,6 +377,10 @@ const closeEvent = function () {
     overlay.classList.add('hidden');
   };
 
+  overlay.addEventListener('click', (e) => {
+    closeM();
+  });
+
   document.querySelector('.close-modal').addEventListener('click', () => {
     closeM();
   });
@@ -409,19 +413,19 @@ const openM = function () {
 };
 
 const sort = function (acc) {
-  unfilteredArray = [...acc.movements];
-  deposit = [...acc.movements];
-  withdrawal = [...acc.movements];
+  const deposit = [...acc.movements].filter((el) => el > 0);
+  const withdrawal = [...acc.movements].filter((el) => el < 0);
+  const unfilteredArray = acc.movements;
 
   document.querySelector('#sort').addEventListener('input', (e) => {
     if (e.target.value === 'Deposit') {
-      acc.movements = [...deposit.filter((el) => el > 0)];
+      acc.movements = deposit;
       displayMovements(acc);
     } else if (e.target.value === 'Withdrawal') {
-      acc.movements = [...withdrawal.filter((el) => el < 0)];
+      acc.movements = withdrawal;
       displayMovements(acc);
     } else if (e.target.value === 'All') {
-      acc.movements = [...unfilteredArray];
+      acc.movements = unfilteredArray;
       displayMovements(acc);
     }
   });
@@ -584,12 +588,12 @@ btnLoan.addEventListener('click', (e) => {
     displayMovements(currentAccount);
     calcBalance(currentAccount);
     calcSummary(currentAccount);
+    sort(currentAccount);
     errorMessage.classList.remove('error-open');
   } else {
     errorMessage.innerHTML = 'Amount Too Large';
     errorMessage.classList.add('error-open');
   }
-
   inputLoanAmount.value = '';
 });
 
@@ -664,7 +668,6 @@ btnSignup.addEventListener('click', (e) => {
   const errorPassword = document.querySelector('.error-password');
   const error = document.querySelector('.error');
 
-  console.log(errorUserName);
   // First Name
   if (
     inputSignupFirstName.value === '' ||
