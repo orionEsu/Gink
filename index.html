@@ -48,7 +48,7 @@
         <div class="login__username">
           <input
             type="text"
-            placeholder="user id"
+            placeholder="username"
             class="log__input login__input--user"
           />
           <p class="error error-login"></p>
@@ -63,7 +63,7 @@
           />
           <p class="error error-pin"></p>
         </div>
-        <button class="log__btn login__btn">
+        <button type="submit" class="log__btn login__btn">
           login
           <i class="fa-solid fa-arrow-right-long"></i>
         </button>
@@ -92,7 +92,7 @@
         <div>
          <input
           type="text"
-          placeholder="user id"
+          placeholder="username"
           class="log__input signup__input--user"
           required
         />
@@ -110,7 +110,7 @@
           <p class="error error-password">Error</p>
         </div>
      
-        <button class="log__btn signup__btn">
+        <button type="submit" class="log__btn signup__btn">
           Signup
           <i class="fa-solid fa-arrow-right-long"></i>
         </button>
@@ -119,7 +119,7 @@
     </div>
 
     <section class="container" id="main">
-      <nav>
+      <nav class="nav">
         <div class="logo__info">
           <p class="logo logo__header">Gink</p>
           <h2 class="welcome">Welcome</h2>
@@ -201,7 +201,7 @@
                 <p class="error error-loan"></p>
               </div>
 
-              <button class="form__btn form__btn--loan">
+              <button type="submit" class="form__btn form__btn--loan">
                 <i class="fa-solid fa-arrow-right-long"></i>
               </button>
             </form>
@@ -222,8 +222,8 @@
             </h3>
 
             <div class="select">
-              <select name="Sort" id="sort">
-                 <option selected>Sort By : </option>
+              <select title="Select Transaction Type" name="Sort" id="sort">
+                 <option selected disabled>Sort By : </option>
                  <option value="All">All</option>
                  <option value="Deposit">Deposit</option>
                  <option value="Withdrawal">Withdrawal</option>
