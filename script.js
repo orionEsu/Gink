@@ -785,6 +785,7 @@ btnSignup.addEventListener('click', (e) => {
         sort(currentAccount);
         profileImg(currentAccount);
         // animate();
+
         bodyTimeline
           .from(
             '.logo__header',
@@ -848,10 +849,14 @@ btnSignup.addEventListener('click', (e) => {
             y: 20,
             duration: 0.4,
           })
-          .from('.transaction', {
-            x: 50,
-            ease: 'back',
-          })
+          .from(
+            '.transaction',
+            {
+              x: 50,
+              ease: 'back',
+            },
+            3
+          )
           .from(
             '.transaction__heading',
             {
@@ -859,7 +864,6 @@ btnSignup.addEventListener('click', (e) => {
               ease: 'power4',
               duration: 0.6,
             },
-            '<.7'
           )
           .from('.beneficiary', {
             x: 25,
